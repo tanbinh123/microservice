@@ -15,7 +15,7 @@ SpringMVC+Mybatis+Mysql+Tomcat+Java8+Bootstrap+Angularjs
 2.Mybats作为数据库层的操作  
 3.Maven作为jar包管理    
 4.Tomcat作为应用服务器   
-5.Java8作为后端主体开发语言   
+5.Java8作为后端主体开发语言     
 6.Mysql5.6作为后端主体关系型数据库   
 7.MongoDB作为后端辅助非关系型数据库   
 8.Shiro作为后端权限管理框架   
