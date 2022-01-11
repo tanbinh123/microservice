@@ -36,7 +36,7 @@ spring-mvc+mybatis+mysql+tomcat+java8+bootstrap+angularjs
 1、关于框架                 
 框架有很多不完善，但是满足简单的功能要求还是没问题的               
 2、关于业务代码编写方式               
-只需要关注controller(请求分发、跳转及异常处理)->service(业务逻辑处理)->dao(数据库访问)就可以了              
+只需要关注controller（请求分发、跳转及异常处理）->service（业务逻辑处理）->dao（数据库访问）就可以了              
 3、关于单元测试                
 从controller->service->dao都可以分层测试，也有页面可以测试API返回的json数据             
 4、这里的angularjs指的是angular1，而angular指的是2及其以上   
