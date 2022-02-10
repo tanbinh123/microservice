@@ -1,0 +1,16 @@
+/angular-admin/package-lock.json
+.angular
+node_modules
+.settings
+target
+.idea
+/common/.classpath
+/common/.project
+/eureka-server/.classpath
+/eureka-server/.project
+/eureka-client-admin/.classpath
+/eureka-client-admin/.project
+/eureka-client-actuator/.classpath
+/eureka-client-actuator/.project
+/eureka-client-gateway/.classpath
+/eureka-client-gateway/.project
