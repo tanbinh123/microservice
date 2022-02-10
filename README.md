@@ -1,7 +1,7 @@
 # 微服务 V1.0          
 # 旧项目JavaWeb已废弃，可参考JavaWeb.zip          
 # 一、项目启动说明          
-当新建一个纯净的项目引入eureka-client-admin只需要排除默认数据源配置即可：@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})    
+当新建一个纯净的项目引入common只需要排除默认数据源配置即可：@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})    
 1、angular-admin    
 为eureka-client-admin的前端，运行：npm install->npm start->http://localhost:4200    
 2、common为大部分后端项目的共有依赖    
