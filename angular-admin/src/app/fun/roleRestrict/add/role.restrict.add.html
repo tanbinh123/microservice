@@ -1,0 +1,45 @@
+<div>
+  <div class="form-group">
+    <label>角色名</label>
+    <select (change)="selectChangeRole($event)" class="form-control">
+      <option value=""></option>
+      <option *ngFor="let eachData of roleData;" value="{{eachData.roleId}}">{{eachData.roleName}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>省</label>
+    <select [disabled]='provinceDisableTag' (change)="selectChangeProvince($event)" class="form-control">
+      <option value=""></option>
+      <option value="self">本省</option>
+      <option value="all">全部</option>
+      <option *ngFor="let eachData of getProvinceData;" value="{{eachData.code}}">{{eachData.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>市</label>
+    <select [disabled]='cityDisableTag' (change)="selectChangeCity($event)" class="form-control">
+      <option value=""></option>
+      <option value="self">本市</option>
+      <option value="all">全部</option>
+      <option *ngFor="let eachData of getCityData;" value="{{eachData.code}}">{{eachData.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>区</label>
+    <select [disabled]='districtDisableTag' (change)="selectChangeDistrict($event)" class="form-control">
+      <option value=""></option>
+      <option value="self">本区</option>
+      <option value="all">全部</option>
+      <option *ngFor="let eachData of getDistrictData;" value="{{eachData.code}}">{{eachData.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>限定方式</label>
+    <select (change)="selectChangeRestrictWay($event)" class="form-control">
+      <option value=""></option>
+      <option *ngFor="let eachData of roleRestrictWayFromDictionaryData;" value="{{eachData.valueCode}}">{{eachData.means}}</option>
+    </select>
+  </div>
+  <button type="button" (click)="roleRestrictAdd()" class="btn btn-primary">提交</button>
+  <button type="button" (click)="roleRestrictAddBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>

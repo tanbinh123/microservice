@@ -1,0 +1,32 @@
+<div>
+  <div class="form-group">
+    <label>数据类型</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.dataType">
+  </div>
+  <div class="form-group">
+    <label>key值</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.keyCode">
+  </div>
+  <div class="form-group">
+    <label>value值</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.valueCode">
+  </div>
+  <div class="form-group">
+    <label>分类名称</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.categoryName">
+  </div>
+  <div class="form-group">
+    <label>分类代码</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.categoryCode">
+  </div>
+  <div class="form-group">
+    <label>含义</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.means">
+  </div>
+  <div class="form-group">
+    <label>备注</label>
+    <input type="text" class="form-control" [(ngModel)]="configModifyRequest.remark">
+  </div>
+  <button type="button" (click)="configModify()" class="btn btn-primary">提交</button>
+  <button type="button" (click)="configModifyBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>

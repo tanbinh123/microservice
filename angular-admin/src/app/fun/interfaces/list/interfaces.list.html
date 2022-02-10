@@ -1,0 +1,77 @@
+<div style="margin-top:1%;margin-left:1%">
+  接口名称<input type="text" style="height:35px;" placeholder="请输入接口名称" [(ngModel)]="interfacesListRequest.name">
+  url<input type="text" style="height:35px;" placeholder="请输入url" [(ngModel)]="interfacesListRequest.url">
+  方法名称<input type="text" style="height:35px;" placeholder="请输入方法名称" [(ngModel)]="interfacesListRequest.method">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="interfacesSearch(1)" *ngIf="interfacesListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="interfacesTestFunction()" *ngIf="interfacesTestZone">接口测试</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table" style="table-layout:fixed;">
+        <thead>
+          <tr class="text-center">
+            <th width="70px;">序号</th>
+            <th width="160px;">接口名称</th>
+            <th width="150px;">URL通配</th>
+            <th width="120px;">总被调用次数</th>
+            <th width="100px;">方法名称</th>
+            <th width="130px;">数据权限</th>
+            <th width="130px;">日志记录</th>
+            <th width="130px;">频次</th>
+            <th width="130px;">请求加密</th>
+            <th width="130px;">响应加密</th>
+			<th width="90px;">接口级别</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+          <tr class="text-center">
+            <td colspan=9>数据获取中...</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+          <tr class="text-center">
+            <td colspan=9>无数据</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.name}}</td>
+            <td>{{eachData.url}}</td>
+            <td>{{eachData.historyTimes}}</td>
+            <td>{{eachData.method}}</td>
+            <td *ngIf="eachData.dataPermission==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.dataPermission==0" style="color:#ff0b0c">否</td>
+            <td *ngIf="eachData.logRecord==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.logRecord==0" style="color:#ff0b0c">否</td>
+            <td *ngIf="eachData.counts == null || eachData.counts.trim() == '' || eachData.times == null || eachData.times.trim() == '' || eachData.unit == null || eachData.unit.trim() == ''" style="color:#06801f">无限制</td>
+            <td *ngIf="eachData.counts != null && eachData.counts.trim() != '' && eachData.times != null && eachData.times.trim() != '' && eachData.unit != null && eachData.unit.trim() != ''" style="color:#ff0b0c">{{eachData.times}}{{eachData.unit}}{{eachData.counts}}次</td>
+            <td *ngIf="eachData.requestDataSecret==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.requestDataSecret==0" style="color:#ff0b0c">否</td>
+            <td *ngIf="eachData.responseDataSecret==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.responseDataSecret==0" style="color:#ff0b0c">否</td>
+			<td>{{eachData.level}}</td>
+            <td>
+              <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info" style="margin-right:10px;">接口详情</button>
+              <button *ngIf="interfacesModifyZone" (click)="interfacesModifyFunction(eachData.id)" class="btn btn-sm btn-warning" style="margin-right:10px;">修改接口</button>
+              <button *ngIf="eachData.dataPermission==1 && interfacesUserRoleDataPermissionZone" (click)="interfacesDataPermissionAssignmentFunction(eachData)" class="btn btn-sm btn-primary">数据权限分配</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="interfacesSearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="interfacesSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="interfacesSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="interfacesSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="interfacesSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

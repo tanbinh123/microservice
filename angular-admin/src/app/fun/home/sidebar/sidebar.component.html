@@ -1,0 +1,6 @@
+<div style="height:auto;vertical-align:middle;text-align:center;margin-top:5%;">
+  <span style="font-weight:bold;"><a [routerLink]="['/web']"><h3>后台管理系统</h3></a></span>
+</div>
+<div style="margin-top:5%;" *ngIf="menuListForTree!=null">
+  <app-web-home-sidebar-recursion *ngFor="let i of menuListForTree" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></app-web-home-sidebar-recursion>
+</div>

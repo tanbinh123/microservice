@@ -1,0 +1,23 @@
+<div class="loginImage">
+  <div class="login">
+    <div class="input-group">
+      <h2>后台管理系统V1.0</h2>
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">账号</span>
+      </div>
+      <input type="text" [(ngModel)]="userLoginRequest.username" class="form-control" placeholder="请输入账号" maxlength="20" loginKeyDownDirective/>
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">密码</span>
+      </div>
+      <input type="password" [(ngModel)]="userLoginRequest.password" class="form-control" placeholder="请输入密码" maxlength="20" (keydown.enter)="keydownEnter($event)"/>
+    </div>
+    <div class="input-group">
+      <button type="button" (click)="demo()" class="btn btn-primary">Angular示例</button>
+      <button type="button" (click)="login()" class="btn btn-primary" style="margin-left:auto">登录</button>
+    </div>
+  </div>
+</div>

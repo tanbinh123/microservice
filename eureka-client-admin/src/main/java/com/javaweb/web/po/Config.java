@@ -1,0 +1,64 @@
+package com.javaweb.web.po;
+
+import java.io.Serializable;
+
+import com.javaweb.annotation.sql.Column;
+import com.javaweb.annotation.sql.Table;
+import com.javaweb.base.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Table(name="sys_config")
+public class Config extends BaseEntity implements Serializable {
+
+	private static final long serialVersionUID = 7995204896682230169L;
+
+	@Column(name="id",pk=true,columnDesc="主键ID")
+    private String id;//主键ID
+    
+    @Column(name="data_type",columnDesc="数据类型")
+    private String dataType;//数据类型
+    
+    @Column(name="key_code",columnDesc="key值")
+    private String keyCode;//key值
+    
+    @Column(name="value_code",columnDesc="value值")
+    private String valueCode;//value值
+    
+    @Column(name="category_name",columnDesc="分类名称")
+    private String categoryName;//分类名称
+    
+    @Column(name="category_code",columnDesc="分类代码")
+    private String categoryCode;//分类代码
+    
+    @Column(name="sort",columnDesc="序号")
+    private String sort;//序号
+    
+    @Column(name="means",columnDesc="含义")
+    private String means;//含义
+    
+    @Column(name="universally",columnDesc="是否通用（0：通用；1：不通用）")
+    private Integer universally;//是否通用（0：通用；1：不通用）
+    
+    @Column(name="system_id",columnDesc="系统ID")
+	private String systemId;//系统ID
+    
+    @Column(name="remark",columnDesc="备注说明")
+    private String remark;//备注说明
+    
+    public static final String idColumn = "id";
+    public static final String dataTypeColumn = "data_type";
+    public static final String keyCodeColumn = "key_code";
+    public static final String valueCodeColumn = "value_code";
+    public static final String categoryNameColumn = "category_name";
+    public static final String categoryCodeColumn = "category_code";
+    public static final String sortColumn = "sort";
+    public static final String meansColumn = "means";
+    public static final String universallyColumn = "universally";
+    public static final String systemIdColumn = "system_id";
+    public static final String remarkColumn = "remark";
+
+}

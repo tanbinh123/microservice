@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.javaweb</groupId>
+  	<artifactId>eureka-client-admin</artifactId>
+  	<version>1.0.0</version>
+  	<packaging>jar</packaging>
+	
+  	<properties>
+  		<java.version>1.8</java.version>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	</properties>
+  	
+  	<parent>
+    	<groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.2</version>
+    </parent>
+    
+    <dependencies>
+    	<dependency>
+    		<groupId>com.javaweb</groupId>
+	    	<artifactId>common</artifactId>
+	    	<version>1.0.0</version>
+    	</dependency>
+  		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+    	<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+		<!-- common引用的这里就不需要再引用了 -->
+        <!-- admin need start -->
+        <!-- 性能监控
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-actuator</artifactId>
+     	</dependency>
+     	-->
+     	<!-- 监控管理界面
+  		<dependency>
+	         <groupId>de.codecentric</groupId>
+	         <artifactId>spring-boot-admin-starter-client</artifactId>
+	         <version>2.6.0</version>
+	    </dependency>
+	    -->
+        <!-- websocket -->
+		<dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+        <!-- redis -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-redis</artifactId>
+	    </dependency>
+	    <!-- lettuce pool -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+	      	<groupId>io.lettuce</groupId>
+	      	<artifactId>lettuce-core</artifactId>
+	    </dependency>
+        <!-- RxJava2响应式编程 -->
+    	<dependency>
+		    <groupId>io.reactivex.rxjava2</groupId>
+		    <artifactId>rxjava</artifactId>
+		</dependency>
+	    <!-- test -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+	    <!-- mysql驱动 -->
+	    <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- 使用热部署 -->
+    	<dependency>
+    		<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+    	</dependency>
+		<!-- 数据库连接池Druid -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>1.2.8</version>
+		</dependency>
+		<!-- 数据库连接池HikariCP -->
+    	<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		</dependency>
+		<!-- netty -->
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		</dependency>
+		<!-- 二维码 -->
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>javase</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+		<!-- google工具类 -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>31.0.1-jre</version>
+		</dependency>
+		<!-- 高性能缓存库，之所以用它是因为：
+		Spring Cloud LoadBalancer is currently working with the default cache. 
+		You can switch to using Caffeine cache, 
+		by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath. 
+		-->
+		<dependency>
+		    <groupId>com.github.ben-manes.caffeine</groupId>
+		    <artifactId>caffeine</artifactId>
+		</dependency>
+		<!-- 引入本地jar包 -->
+		<!--  
+		<dependency>
+	     	<groupId>com.demo</groupId>
+	        <artifactId>test</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+	        <scope>system</scope>
+	        <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
+      	</dependency>
+      	-->
+      	<!-- admin need end -->
+	</dependencies>
+	
+	<!-- SpringBoot（2.6.2）与SpringCloud（2021.0.0）版本对应可以参考：https://spring.io/projects/spring-cloud -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>2021.0.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<plugins>
+		   <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		        	<skip>true</skip>
+		        </configuration>
+		    </plugin>
+	    	<plugin>
+	        	<groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-maven-plugin</artifactId>
+	            <configuration>
+	            	<mainClass>com.javaweb.Application</mainClass>
+	            	<!-- 引入本地jar包 -->
+                    <includeSystemScope>true</includeSystemScope>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                	<goals>
+	                    	<goal>repackage</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.ModuleDao">
+
+	<select id="getModuleByModuleId" parameterType="java.util.List" resultType="com.javaweb.web.po.Module">
+		<!-- <if test="list.size()>0"> -->
+			SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,api_sign as apiSign,parent_id as parentId,
+			(select n.module_name from sys_module n where n.module_id = sys_module.parent_id and n.del_flag = 0) as parentName,fcode,level,orders,
+			module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,create_date as createDate,creator,update_date as updateDate,
+			updater,del_flag as delFlag 
+			from sys_module WHERE module_id in
+			<foreach collection="list" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach> 
+			and del_flag = 0 ORDER BY level ASC,orders ASC
+		<!-- </if> -->
+	</select>
+	
+	<select id="moduleList" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="com.javaweb.web.eo.module.ModuleListResponse">
+		select m.module_id as moduleId,m.parent_id as parentId,m.module_name as moduleName,
+		(select n.module_name from sys_module n where n.module_id = m.parent_id and n.del_flag = 0) as parentName,
+		m.page_url as pageUrl,m.api_url as apiUrl,m.module_type as moduleType,m.orders,m.alias,m.create_date as createDate
+		from sys_module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name REGEXP binary #{moduleName}</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url REGEXP binary #{pageUrl}</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.api_url REGEXP binary #{apiUrl}</if>
+			<if test='moduleType == "1" or moduleType == "2" or moduleType == "3"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias REGEXP binary #{alias}</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+		<!-- 
+		mysql这里如果要展示树形结构的层次顺序仅仅使用order by是办不到的
+		也没有类似oracle的SELECT * from sys_module p start with p.module_type = 1 CONNECT BY prior p.id = p.parent_id and 1=1 ORDER SIBLINGS BY p.orders asc	
+		因此需要手动写函数实现 
+		-->
+		order by m.module_type asc,m.orders asc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="moduleListCount" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="java.lang.Long">
+		select count(1) from sys_module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name REGEXP binary #{moduleName}</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url REGEXP binary #{pageUrl}</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.api_url REGEXP binary #{apiUrl}</if>
+			<if test='moduleType == "1" or moduleType == "2" or moduleType == "3"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias REGEXP binary #{alias}</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+	</select>
+	
+	<delete id="moduleDelete" parameterType="java.lang.String">
+		<!-- 删除用户模块关联 -->
+		delete from sys_user_module where module_id = #{_parameter};
+		<!-- 删除角色模块关联 -->
+		delete from sys_role_module where module_id = #{_parameter};
+		<!-- 删除模块 -->
+		delete from sys_module where module_id = #{_parameter};
+	</delete>
+	
+	<select id="moduleDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
+		select module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,api_sign as apiSign,parent_id as parentId,
+		(select n.module_name from sys_module n where n.module_id = sys_module.parent_id and n.del_flag = 0) as parentName,fcode,level,orders,
+		module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,create_date as createDate,creator,update_date as updateDate,
+		updater,del_flag as delFlag
+		from sys_module where module_id = #{_parameter} and del_flag = 0 limit 1
+	</select>
+	
+	<select id="getModuleIdAndNameList" parameterType="java.util.Map" resultType="com.javaweb.web.eo.module.ModuleIdAndNameResponse">
+		<!-- <if test='moduleType == "1" or moduleType == "2"'> -->
+		select module_id as moduleId,module_name as moduleName from sys_module where del_flag = 0
+		<if test='moduleType == "1"'>and module_type = 1</if>
+		<if test='moduleType == "2"'>and module_type = 1</if>
+		<if test='moduleType == "3"'>and module_type = 2 and page_url is not null</if>
+	</select>
+	
+	<select id="getAllRoleByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.Role">
+		select role_id as roleId,role_name as roleName,parent_id as parentId,fcode,level,type,remark,
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag 
+		from sys_role where role_id in(select DISTINCT role_id from sys_role_module where module_id = #{_parameter})
+	</select>
+	
+	<select id="getAllUserByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.User">
+		select user_id as userId,user_name as userName,password,person_name as personName,email,phone,portrait,parent_id as parentId,
+		fcode,level,remark,status,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		from sys_user where user_id in(
+			select distinct user_id from sys_user_role where role_id in(
+				select role_id from sys_role where role_id in(
+					select distinct role_id from sys_role_module where module_id = #{_parameter}
+				)
+			)
+		)
+	</select>
+	
+	<update id="setModuleParentIdNull" parameterType="com.javaweb.web.po.Module">
+		update sys_module set parent_id = null where module_id = #{moduleId};
+	</update>
+	
+	<select id="getModuleByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
+		SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,api_sign as apiSign,parent_id as parentId,
+		(select n.module_name from sys_module n where n.module_id = sys_module.parent_id and n.del_flag = 0) as parentName,fcode,level,orders,
+		module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,create_date as createDate,creator,update_date as updateDate,
+		updater,del_flag as delFlag
+		from sys_module WHERE parent_id = #{_parameter}
+	</select>
+	
+	<select id="getOrders" parameterType="java.util.Map" resultType="java.lang.Long">
+		select orders from sys_module where 
+		<if test="parentId != null and parentId != ''">parent_id = #{parentId}</if>
+		<if test="parentId == null or parentId == ''">parent_id is null</if>
+		and level = ${level} and module_type = ${moduleType} order by orders desc limit 1
+	</select>
+	
+</mapper>

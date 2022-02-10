@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.RoleRestrictDao">
+
+	<select id="roleRestrictList" parameterType="com.javaweb.web.eo.roleRestrict.RoleRestrictListRequest" resultType="com.javaweb.web.eo.roleRestrict.RoleRestrictListResponse">
+		select r.id,(select s.role_name from sys_role s where s.role_id = r.role_id) as roleName,
+		(case when r.province = 'self' then '本省' when r.province = 'all' then '全部' else (select a.name from sys_province a where a.code = r.province) end) as province,
+		(case when r.city = 'self' then '本市' when r.city = 'all' then '全部' else (select b.name from sys_city b where b.code = r.city) end) as city,
+		(case when r.district = 'self' then '本区' when r.district = 'all' then '全部' else (select c.name from sys_district c where c.code = r.district) end) as district,
+		(case when r.restrict_way = 1 then '本人' else '非本人' end) as restrictWay
+		from sys_role_restrict r
+		<where>
+			r.del_flag = 0
+			<if test="roleName != null and roleName != ''">and r.role_id in(select sr.role_id from sys_role sr where sr.role_name REGEXP binary #{roleName})</if>
+			<if test="province != null and province != ''">and r.province = #{province}</if>
+			<if test="city != null and city != ''">and r.city = #{city}</if>
+			<if test="district != null and district != ''">and r.district = #{district}</if>
+		</where>
+		order by r.create_date desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="roleRestrictListCount" parameterType="com.javaweb.web.eo.roleRestrict.RoleRestrictListRequest" resultType="java.lang.Long">
+		select count(1) from sys_role_restrict r
+		<where>
+			r.del_flag = 0
+			<if test="roleName != null and roleName != ''">and r.role_id in(select sr.role_id from sys_role sr where sr.role_name REGEXP binary #{roleName})</if>
+			<if test="province != null and province != ''">and r.province = #{province}</if>
+			<if test="city != null and city != ''">and r.city = #{city}</if>
+			<if test="district != null and district != ''">and r.district = #{district}</if>
+		</where>
+	</select>
+	
+</mapper>

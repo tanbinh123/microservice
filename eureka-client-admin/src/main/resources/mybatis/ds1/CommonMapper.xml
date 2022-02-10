@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 在mybatis中#{}一般都是带上引号的字符串，${}一般都是不带引号直接使用的；而在jsp中${}表示立即计算；#{}表示延迟计算 -->
+
+<!-- 若test比较的是字符串，①将外层变为单引号，内层变为双引号；②单引号的值.toString() -->
+
+<!-- 单参数使用
+1、参数如String userId，xml写为：#{userId}
+2、参数如String userId，xml写为：#{_parameter}
+3、参数如@Param("aaa")String userId，xml写为：#{aaa}
+-->
+
+<!-- mysql分页直接limit,oracle就要这么写
+	 SELECT * FROM 
+	 (
+	     select * from
+	     (
+	         SELECT ROWNUM AS rowno,count(*) over() allCount,pageList.* FROM
+	         (
+	         	select * from test
+	          	where 1 = 1
+	         ) pageList
+	     )
+	  	 where ROWNUM <=10
+	 ) table_alias
+	 WHERE table_alias.rowno >0	 
+	 count(*) over() allCount完成了既分页又统计总数，更多情况下不建议使用，尤其当查询条件较为复杂时
+-->
+
+<!-- foreach 
+<foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
+	#{item}
+</foreach>
+insert into test(a,b,c,d) values 
+<foreach collection="array" index="index" item="item" open="" separator="," close="">   
+    (1,2,#{item.date},${item.scheduleType})
+</foreach>
+-->
+
+<!-- 自增ID 
+<insert id="insert" parameterType="某个对象">
+	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+   		SELECT @@IDENTITY
+ 	</selectKey>
+ 	insert语句
+</insert>
+或者
+<insert id="insert" parameterType="某个对象" useGeneratedKeys="true" keyProperty="userId">
+	insert语句
+</insert>
+-->
+
+<!-- 建立SQL查询结果字段与实体属性的映射关系信息 
+<select id="getUser" resultMap="myUser">
+	SELECT id,user_name,password FROM user
+</select>
+<resultMap id="myUser" type="com.company.User">
+ 	<id property="id" column="id"/>
+ 	<result property="userName" column="user_name"/>
+ 	<result property="passWord" column="password"/>
+</resultMap>
+<select id="getUserByUserId" parameterType="Map" resultMap="myUser">
+那么返回的就是User对象，如果多条就是List<User>
+-->
+
+<!-- mybatis分页机制写法
+<resultMap type="com.xxx.xxx.User" id="a">  
+   	<result column="id" jdbcType="INTEGER" javaType="Integer" /> 
+   	<result column="menu_icon" jdbcType="VARCHAR" javaType="String" />  
+</resultMap>  
+<resultMap type="Integer" id="b">   
+   	<result column="total" property="total" jdbcType="INTEGER" javaType="Integer"/>  
+</resultMap> 
+<select id="x" resultMap="a,b">
+	SELECT SQL_CALC_FOUND_ROWS id,menu_icon from test WHERE menu_icon='i_c_o_n' LIMIT 0,2;
+    SELECT FOUND_ROWS() as total;
+</select>
+public List<List<?>> x();
+-->
+
+<!-- 存储过程示例 
+CREATE PROCEDURE test(IN modulename VARCHAR(22))  
+BEGIN
+	SELECT * from `user`;
+END
+-->
+<!-- mybatis接口写为 
+public List<User> getAll(Map<String,String> map);
+-->
+<!-- mybatis的XML写为  
+<select id="getAll" parameterType="java.util.Map" resultType="com.javaweb.entity.rbac.User">
+	CALL test(#{modulename});  
+</select>
+-->
+<!-- JdbcTemplate存储过程示例
+//调用存储过程（详细参考:http://www.open-open.com/lib/view/open1392606683850.html）
+jdbcTemplate.execute("SET @@SESSION.max_sp_recursion_depth=10");
+List resultList = (List)jdbcTemplate.execute(   
+	new CallableStatementCreator() {   
+    	public CallableStatement createCallableStatement(Connection con) throws SQLException {   
+        	String storedProc = "{call p(?)}";   
+            CallableStatement cs = con.prepareCall(storedProc);   
+            cs.setString(1,"1");
+            return cs;
+        }   
+    },new CallableStatementCallback(){   
+        public Object doInCallableStatement(CallableStatement cs) throws SQLException,DataAccessException{   
+        	List resultsMap = new ArrayList();   
+            cs.execute(); 
+           	while(true){
+        	   if(cs.getMoreResults()){
+        	      ResultSet rs = cs.getResultSet();
+		          while(rs.next()){
+		              Map rowMap = new HashMap();   
+		              rowMap.put("id",rs.getString("id"));   
+		              rowMap.put("name",rs.getString("name")); 
+		              rowMap.put("pid",rs.getString("pid")); 
+		              resultsMap.add(rowMap);   
+		          }   
+		          rs.close();   
+        	   }else{
+        		  break;
+        	   }
+            }
+    		return resultsMap;   
+    }
+});
+-->
+
+<!-- Mybatis操作BLOB start -->
+<!--  
+1.建表
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+	`filename` varchar(255) NOT NULL,
+	`filecontent` longblob,
+	PRIMARY KEY (`filename`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2.创建对应实体类
+package com.javaweb.entity.rbac;
+public class File {
+	private String filename;
+	private byte[] filecontent;
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	public byte[] getFilecontent() {
+		return filecontent;
+	}
+	public void setFilecontent(byte[] filecontent) {
+		this.filecontent = filecontent;
+	}
+}
+3.Mybatis写BLOB
+[public void insertBlob(Map<String,Object> map);]
+File file = new File("C:\\Users\\abc\\Desktop\\测试.mp4");
+InputStream blobis = new FileInputStream(file);
+List<Byte> list = new ArrayList<>();
+byte b[] = new byte[1];
+while(blobis.read(b)!=-1){
+	list.add(b[0]);
+}
+blobis.close();
+Map<String,Object> map = new HashMap<>();
+map.put("filename", "文件2");
+map.put("filecontent", list.toArray());
+userDao.insertBlob(map);
+<insert id="insertBlob" parameterType="Map">
+	insert into file(filename,filecontent) values(#{filename},#{filecontent})
+</insert>
+4.Mybatis读BLOB
+[public List<File> selectBlob();]
+List<com.javaweb.entity.rbac.File> list = userDao.selectBlob();
+com.javaweb.entity.rbac.File file = list.get(0);
+byte bytes[] = file.getFilecontent();
+OutputStream outputStream = new FileOutputStream(new File("C:\\Users\\abc\\Desktop\\a.mp4"));
+outputStream.write(bytes);
+outputStream.close();
+<select id="selectBlob" resultType="com.javaweb.entity.rbac.File">
+	select filename,filecontent from file
+</select>
+5.SQL直接操作
+insert into tb_test(my_blob) values(UNHEX(HEX("abc")))
+-->
+<!-- Mybatis操作BLOB end -->
+
+<!-- JdbcTemplate操作BLOB start -->
+<!--  
+1.建表
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+	`filename` varchar(255) NOT NULL,
+	`filecontent` longblob,
+	PRIMARY KEY (`filename`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2.JdbcTemplate写BLOB
+File file = new File("C:\\Users\\abc\\Desktop\\测试.mp4");
+LobHandler lobHandler = new DefaultLobHandler();
+final InputStream blobis = new FileInputStream(file);
+jdbcTemplate.execute("insert into file(filename,filecontent) values(?,?)", new AbstractLobCreatingPreparedStatementCallback(lobHandler) { 
+	protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {
+		ps.setString(1, "文件1");
+		lobCreator.setBlobAsBinaryStream(ps, 2, blobis, (int)file.length()); 
+	}
+});
+3.JdbcTemplate读BLOB
+LobHandler lobHandler = new DefaultLobHandler();
+List<Map<String, Object>> list = jdbcTemplate.query("select filename,filecontent from file",new RowMapper<Map<String, Object>>() {
+	        public Map<String, Object> mapRow(ResultSet rs, int i) throws SQLException {
+	        	Map<String, Object> results = new HashMap<String, Object>();
+	        	byte[] blobBytes = lobHandler.getBlobAsBytes(rs, "filecontent"); 
+	        	results.put("BLOB", blobBytes); 
+	        	return results; 
+	        } 
+});
+System.out.println(list.size());
+byte[] blobBytes = (byte[]) list.get(0).get("BLOB");
+OutputStream outputStream = new FileOutputStream(new File("C:\\Users\\abc\\Desktop\\a.mp4"));
+outputStream.write(blobBytes);
+outputStream.close();
+-->
+<!-- JdbcTemplate操作BLOB end -->
+<mapper namespace="com.javaweb.web.dao.ds1.CommonDao">
+
+	<select id="sqlSelect" parameterType="java.lang.String" resultType="java.util.LinkedHashMap"> 
+		${value}
+	</select>
+	
+	<update id="sqlUpdate" parameterType="java.lang.String">
+		${value}
+	</update>
+	
+	<insert id="sqlInsert" parameterType="java.lang.String">
+		${value}
+	</insert>
+	
+	<delete id="sqlDelete" parameterType="java.lang.String">
+		${value}
+	</delete>
+	
+	<!-- 其它mapper.xml要引用该共通的sql，可以写为：<include refid="com.javaweb.web.dao.ds1.CommonDao.commonSqlTest"></include> -->
+	<!--  
+	<sql id="commonSqlTest">
+		where 1=1
+	</sql>
+	-->
+	
+</mapper>
