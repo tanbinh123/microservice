@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import com.javaweb.annotation.validate.common.ValueRange;
+import com.javaweb.annotation.validate.ValueRange;
 import com.javaweb.constant.SystemConstant;
 
 import lombok.Getter;

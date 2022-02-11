@@ -1,4 +1,4 @@
-package com.javaweb.annotation.validate.common;
+package com.javaweb.annotation.validate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,12 +10,14 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
+import com.javaweb.enums.CommonCheckEnum;
+
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=IntegerValueClass.class)
-public @interface ValueRange {
+@Constraint(validatedBy=CommonlyUsedClass.class)
+public @interface CommonlyUsed {
 
-	int[] vauleArray() default {};//特定数值列表
+	CommonCheckEnum commonCheckEnum();
 	
 	boolean allowEmpty() default false;//是否允许空（允许空时将不做校验，不允许空时将做校验）
 	
@@ -27,30 +29,40 @@ public @interface ValueRange {
 	
 }
 
-class IntegerValueClass implements ConstraintValidator<ValueRange,Object> {
+class CommonlyUsedClass implements ConstraintValidator<CommonlyUsed,Object> {
     
-	protected ValueRange valueRange;
+	protected CommonlyUsed commonlyUsed;
 	
-	public void initialize(ValueRange valueRange) {
-		this.valueRange = valueRange;
+	public void initialize(CommonlyUsed commonlyUsed) {
+		this.commonlyUsed = commonlyUsed;
 	}
 
 	public boolean isValid(Object value,ConstraintValidatorContext context) {
 		try{
-			boolean allowEmpty = valueRange.allowEmpty();
+			boolean allowEmpty = commonlyUsed.allowEmpty();
 			if(allowEmpty){
 				return true;
 			}
 			if(value!=null) {
-				int checkValue = ((Integer)value).intValue();
-				int[] valueArray = this.valueRange.vauleArray();
-				if(valueArray.length==0){
-					return true;
-				}
-				for(int i=0;i<valueArray.length;i++){
-					if(checkValue==valueArray[i]){
+				String checkValue = value.toString();
+				System.out.println(checkValue);//TODO
+				CommonCheckEnum commonCheckEnum = commonlyUsed.commonCheckEnum();
+				switch(commonCheckEnum){
+					case ID_CARD:
+						//TODO
 						return true;
-					}
+					case E_MAIL:
+						//TODO
+						return true;
+					case CAR_NO:
+						//TODO
+						return true;
+					case PHONE_NO:
+						//TODO
+						return true;
+					default:
+						return false;
+					
 				}
 			}
 		}catch(Exception e){

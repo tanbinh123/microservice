@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javaweb.annotation.sql.Column;
+import com.javaweb.annotation.validate.CommonlyUsed;
+import com.javaweb.enums.CommonCheckEnum;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,7 @@ import lombok.Setter;
 @Setter
 public class BaseEntity extends BaseValidatedGroup {
 	
+	@CommonlyUsed(commonCheckEnum=CommonCheckEnum.ID_CARD)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	@Column(name="create_date",columnDesc="创建时间")
 	private Date createDate;//创建时间
