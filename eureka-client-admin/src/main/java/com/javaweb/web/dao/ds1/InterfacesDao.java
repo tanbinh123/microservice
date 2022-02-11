@@ -14,26 +14,26 @@ import com.javaweb.web.po.Interfaces;
 @Mapper
 public interface InterfacesDao extends DaoWapper<Interfaces>{
 	
-	public void interfacesBatchInsert(List<Interfaces> list);
+	void interfacesBatchInsert(List<Interfaces> list);
 	
-	public void interfacesBatchDelete(List<String> list);
+	void interfacesBatchDelete(List<String> list);
 	
-	public List<Interfaces> interfacesList(InterfacesListRequest interfacesListRequest);
+	List<Interfaces> interfacesList(InterfacesListRequest interfacesListRequest);
 	
-	public Long interfacesListCount(InterfacesListRequest interfacesListRequest);
+	Long interfacesListCount(InterfacesListRequest interfacesListRequest);
 	
-	public List<UserPermissionResponse> userPermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	List<UserPermissionResponse> userPermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public Long userPermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	Long userPermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public List<RolePermissionResponse> rolePermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	List<RolePermissionResponse> rolePermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public Long rolePermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	Long rolePermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public void clearUserRoleDataPermission(); 
+	void clearUserRoleDataPermission(); 
 	
-	public void deleteUserDataPermission(List<String> userIds);
+	void deleteUserDataPermission(List<String> userIds);
 
-	public void deleteRoleDataPermission(List<String> roleIds);
+	void deleteRoleDataPermission(List<String> roleIds);
 
 }

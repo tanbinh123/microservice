@@ -11,14 +11,14 @@ import com.javaweb.web.eo.dbTables.DbTablesOperateRequest;
 
 public interface DbTablesService {
 	
-	public Page dbTablesList(DbTablesListRequest dbTablesListRequest);
+	Page dbTablesList(DbTablesListRequest dbTablesListRequest);
 	
-	public List<DbTablesColumnListResponse> getTableColumnInfo(String tableName);
+	List<DbTablesColumnListResponse> getTableColumnInfo(String tableName);
 	
-	public void codeGenerate(String tableName,HttpServletResponse httpServletResponse);
+	void codeGenerate(String tableName,HttpServletResponse httpServletResponse);
 	
-	public void dbTablesReduction();
+	void dbTablesReduction();
 	
-	public Object dbTablesOperate(DbTablesOperateRequest dbTablesOperateRequest);
+	Object dbTablesOperate(DbTablesOperateRequest dbTablesOperateRequest);
 	
 }

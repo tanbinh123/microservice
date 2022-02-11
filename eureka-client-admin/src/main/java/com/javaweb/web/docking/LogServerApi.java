@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface LogServerApi {
     
     @RequestMapping(method=RequestMethod.POST,value="/test",consumes="application/json")
-    public String test(LogServerApiEntity logServerApiEntity);
+    String test(LogServerApiEntity logServerApiEntity);
 
 }

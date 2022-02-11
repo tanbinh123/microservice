@@ -10,6 +10,6 @@ import com.javaweb.web.po.RoleData;
 @Mapper
 public interface RoleDataDao extends DaoWapper<RoleData> {
 	
-	public List<RoleData> selectAllByRoleIds(List<String> roleIdList);
+	List<RoleData> selectAllByRoleIds(List<String> roleIdList);
 	
 }

@@ -6,8 +6,8 @@ import com.javaweb.web.po.OperationLog;
 
 public interface OperationLogService {
 	
-	public void saveOperationLog(OperationLog operationLog);
+	void saveOperationLog(OperationLog operationLog);
 	
-	public Page operationLogList(OperationLogListRequest operationLogListRequest);
+	Page operationLogList(OperationLogListRequest operationLogListRequest);
 
 }

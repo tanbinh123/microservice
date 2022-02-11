@@ -16,26 +16,26 @@ import com.javaweb.web.po.User;
 @Mapper
 public interface ModuleDao extends DaoWapper<Module> {
 	
-	public List<Module> getModuleByModuleId(List<String> list);
+	List<Module> getModuleByModuleId(List<String> list);
 	
-	public List<ModuleListResponse> moduleList(ModuleListRequest moduleListRequest);
+	List<ModuleListResponse> moduleList(ModuleListRequest moduleListRequest);
 	
-	public Long moduleListCount(ModuleListRequest moduleListRequest);
+	Long moduleListCount(ModuleListRequest moduleListRequest);
 	
-	public void moduleDelete(String moduleId);
+	void moduleDelete(String moduleId);
 	
-	public Module moduleDetail(String moduleId);
+	Module moduleDetail(String moduleId);
 	
-	public List<ModuleIdAndNameResponse> getModuleIdAndNameList(Map<String,String> map);
+	List<ModuleIdAndNameResponse> getModuleIdAndNameList(Map<String,String> map);
 	
-	public List<Role> getAllRoleByModuleId(String moduleId);
+	List<Role> getAllRoleByModuleId(String moduleId);
 	
-	public List<User> getAllUserByModuleId(String moduleId);
+	List<User> getAllUserByModuleId(String moduleId);
 	
-	public void setModuleParentIdNull(Module module);
+	void setModuleParentIdNull(Module module);
 	
-	public List<Module> getModuleByParentId(String parentId);
+	List<Module> getModuleByParentId(String parentId);
 	
-	public Long getOrders(Map<String,Object> map);
+	Long getOrders(Map<String,Object> map);
 	
 }

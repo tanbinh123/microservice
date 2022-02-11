@@ -11,10 +11,10 @@ import com.javaweb.web.po.Config;
 @Mapper
 public interface ConfigDao extends DaoWapper<Config> {
     
-    public List<Config> getConfig(Config config);
+    List<Config> getConfig(Config config);
     
-    public List<Config> configList(ConfigListRequest configListRequest);
+    List<Config> configList(ConfigListRequest configListRequest);
     
-    public Long configCount(ConfigListRequest configListRequest);
+    Long configCount(ConfigListRequest configListRequest);
 	
 }

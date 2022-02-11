@@ -10,23 +10,23 @@ import com.javaweb.util.core.SecretUtil;
 
 public interface SqlString {
 	
-	public String getInsertStringSql(SqlBuildInfo sqlBuildInfo);
+	String getInsertStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getUpdateStringSql(SqlBuildInfo sqlBuildInfo);
+	String getUpdateStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getDeleteStringSql(SqlBuildInfo sqlBuildInfo);
+	String getDeleteStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getSelectAllStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectAllStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getSelectAllCountStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectAllCountStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getSelectByPkStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectByPkStringSql(SqlBuildInfo sqlBuildInfo);
 
-	public String getSelectOneStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectOneStringSql(SqlBuildInfo sqlBuildInfo);
 
-	public String getSelectListStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectListStringSql(SqlBuildInfo sqlBuildInfo);
 	
-	public String getSelectListCountStringSql(SqlBuildInfo sqlBuildInfo);
+	String getSelectListCountStringSql(SqlBuildInfo sqlBuildInfo);
 	
 	/* ------------------------------------------------------------ 华丽的分割线 ------------------------------------------------------------ */
 	

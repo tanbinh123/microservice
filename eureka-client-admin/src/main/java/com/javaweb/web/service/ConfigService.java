@@ -8,18 +8,18 @@ import com.javaweb.web.po.Config;
 
 public interface ConfigService {
     
-    public List<Config> selectAll();
+    List<Config> selectAll();
     
-    public List<Config> getConfig(Config config);
+    List<Config> getConfig(Config config);
     
-    public void configAdd(Config config);
+    void configAdd(Config config);
     
-    public Page configList(ConfigListRequest configListRequest);
+    Page configList(ConfigListRequest configListRequest);
     
-    public void configModify(Config config);
+    void configModify(Config config);
     
-    public Config configDetail(String configId);
+    Config configDetail(String configId);
     
-    public void configDelete(String configId);
+    void configDelete(String configId);
 	
 }

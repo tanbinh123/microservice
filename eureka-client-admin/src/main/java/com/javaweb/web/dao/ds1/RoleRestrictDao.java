@@ -12,8 +12,8 @@ import com.javaweb.web.po.RoleRestrict;
 @Mapper
 public interface RoleRestrictDao extends DaoWapper<RoleRestrict> {
 	
-	public List<RoleRestrictListResponse> roleRestrictList(RoleRestrictListRequest roleRestrictListRequest);
+	List<RoleRestrictListResponse> roleRestrictList(RoleRestrictListRequest roleRestrictListRequest);
 	
-	public Long roleRestrictListCount(RoleRestrictListRequest roleRestrictListRequest);
+	Long roleRestrictListCount(RoleRestrictListRequest roleRestrictListRequest);
 	
 }

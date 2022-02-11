@@ -10,6 +10,6 @@ import com.javaweb.web.po.UserData;
 @Mapper
 public interface UserDataDao extends DaoWapper<UserData> {
 	
-	public List<UserData> selectAllByUserId(String userId);
+	List<UserData> selectAllByUserId(String userId);
 	
 }

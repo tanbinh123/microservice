@@ -14,16 +14,16 @@ import com.javaweb.web.po.Role;
 @Mapper
 public interface RoleDao extends DaoWapper<Role> {
 	
-	public List<RoleListResponse> roleList(RoleListRequest roleListRequest);
+	List<RoleListResponse> roleList(RoleListRequest roleListRequest);
 	
-	public Long roleListCount(RoleListRequest roleListRequest);
+	Long roleListCount(RoleListRequest roleListRequest);
 	
-	public void roleDelete(String roleId);
+	void roleDelete(String roleId);
 	
-	public Role roleDetail(String roleId);
+	Role roleDetail(String roleId);
 	
-	public List<ModuleInfoResponse> roleModuleInfo(String roleId);
+	List<ModuleInfoResponse> roleModuleInfo(String roleId);
 	
-	public void roleModuleAssignment(Map<String,Object> map);
+	void roleModuleAssignment(Map<String,Object> map);
 	
 }

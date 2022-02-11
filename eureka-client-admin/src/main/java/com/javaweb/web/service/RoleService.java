@@ -13,24 +13,24 @@ import com.javaweb.web.po.User;
 
 public interface RoleService {
 	
-	public Page roleList(RoleListRequest roleListRequest);
+	Page roleList(RoleListRequest roleListRequest);
 	
-	public void roleDelete(String roleId);
+	void roleDelete(String roleId);
 
-	public void roleAdd(Role role);
+	void roleAdd(Role role);
 	
-	public void roleAdd(User currentUser,RoleAddRequest roleAddRequest);
+	void roleAdd(User currentUser,RoleAddRequest roleAddRequest);
 
-	public void roleModify(Role role);
+	void roleModify(Role role);
 	
-	public void roleModify(User currentUser,RoleModifyRequest roleModifyRequest);
+	void roleModify(User currentUser,RoleModifyRequest roleModifyRequest);
 	
-	public Role roleDetail(String roleId);
+	Role roleDetail(String roleId);
 	
-	public List<ModuleInfoResponse> roleModuleInfo(String roleId);
+	List<ModuleInfoResponse> roleModuleInfo(String roleId);
 	
-	public void roleModuleAssignment(String roleId,List<String> list);
+	void roleModuleAssignment(String roleId,List<String> list);
 	
-	public List<RoleListAllRequest> roleListAll();
+	List<RoleListAllRequest> roleListAll();
 	
 }

@@ -9,8 +9,8 @@ import com.javaweb.web.po.User;
 
 public interface ScheduleService {
 	
-	public List<ScheduleListResponse> getScheduleByDate(ScheduleListRequest scheduleListRequest);
+	List<ScheduleListResponse> getScheduleByDate(ScheduleListRequest scheduleListRequest);
 	
-	public void scheduleSave(ScheduleAddRequest scheduleAddRequest,User user);
+	void scheduleSave(ScheduleAddRequest scheduleAddRequest,User user);
 	
 }

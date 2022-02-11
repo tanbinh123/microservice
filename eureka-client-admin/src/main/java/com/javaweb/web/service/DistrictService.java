@@ -7,8 +7,8 @@ import com.javaweb.web.eo.roleRestrict.RoleRestrictResponse;
 
 public interface DistrictService {
 	
-	public List<ProvinceCityDistrictResponse> getDistrictList(String cityCode,RoleRestrictResponse roleRestrictResponse);
+	List<ProvinceCityDistrictResponse> getDistrictList(String cityCode,RoleRestrictResponse roleRestrictResponse);
 	
-	public boolean isExistBySelectCityAndDistrictCode(String cityCode,String districtCode);
+	boolean isExistBySelectCityAndDistrictCode(String cityCode,String districtCode);
 
 }

@@ -4,8 +4,8 @@ import com.javaweb.util.entity.SqlConnection;
 
 public interface BaseSql {
 	
-	public boolean executeExport(SqlConnection jdbcBean, String filePath) throws Exception;//导出
+	boolean executeExport(SqlConnection jdbcBean, String filePath) throws Exception;//导出
 	
-	public boolean executeImport(SqlConnection jdbcBean, String filePath) throws Exception;//导入
+	boolean executeImport(SqlConnection jdbcBean, String filePath) throws Exception;//导入
 
 }

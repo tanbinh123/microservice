@@ -11,8 +11,8 @@ import com.javaweb.web.po.DataPermission;
 @Mapper
 public interface DataPermissionDao extends DaoWapper<DataPermission> {
 	
-	public List<ExcludeInfoResponse> selectExcludeInfo(List<String> list);
+	List<ExcludeInfoResponse> selectExcludeInfo(List<String> list);
 	
-	public List<DataPermission> selectAllByInterfacesId(String interfacesId);
+	List<DataPermission> selectAllByInterfacesId(String interfacesId);
 	
 }

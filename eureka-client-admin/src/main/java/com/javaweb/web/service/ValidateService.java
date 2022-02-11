@@ -9,9 +9,9 @@ import com.javaweb.web.eo.validate.ColumnsRepeatRequest;
 public interface ValidateService {
 	
 	//校验字段是否重复
-	public <T> BaseServiceValidateResult isColumnsValueRepeat(ColumnsRepeatRequest<T> columnsRepeatRequest,DaoWapper<T> daoWapper);
+	<T> BaseServiceValidateResult isColumnsValueRepeat(ColumnsRepeatRequest<T> columnsRepeatRequest,DaoWapper<T> daoWapper);
 	
-	public <T> BaseServiceValidateResult isColumnsValueRepeat(List<ColumnsRepeatRequest<T>> columnsRepeatRequestList,DaoWapper<T> daoWapper);
+	<T> BaseServiceValidateResult isColumnsValueRepeat(List<ColumnsRepeatRequest<T>> columnsRepeatRequestList,DaoWapper<T> daoWapper);
 	
 	//可以追加其它自定义的业务校验
 

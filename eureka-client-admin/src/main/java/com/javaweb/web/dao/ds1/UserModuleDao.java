@@ -10,6 +10,6 @@ import com.javaweb.web.po.UserModule;
 @Mapper
 public interface UserModuleDao extends DaoWapper<UserModule> {
 	
-	public List<String> getModuleIdsByUserId(String userId);
+	List<String> getModuleIdsByUserId(String userId);
 	
 }

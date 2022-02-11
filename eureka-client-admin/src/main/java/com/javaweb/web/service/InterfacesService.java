@@ -13,24 +13,24 @@ import com.javaweb.web.po.User;
 
 public interface InterfacesService {
 	
-	public void synchronizedInterfaces();
+	void synchronizedInterfaces();
 	
-	public Page interfacesList(InterfacesListRequest interfacesListRequest);
+	Page interfacesList(InterfacesListRequest interfacesListRequest);
 	
-	public Interfaces interfacesDetail(String interfacesId);
+	Interfaces interfacesDetail(String interfacesId);
 	
-	public void interfacesModify(Interfaces interfaces);
+	void interfacesModify(Interfaces interfaces);
 	
-	public Page userRoleDataPermission(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	Page userRoleDataPermission(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public void dataPermissionAssignment(UserRolePermissionRequest userRolePermissionResponse,String interfacesId,User user);
+	void dataPermissionAssignment(UserRolePermissionRequest userRolePermissionResponse,String interfacesId,User user);
 	
-	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId);
+	List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId);
 	
-	public void synchronizedRedisInterfaceHistoryTimes();
+	void synchronizedRedisInterfaceHistoryTimes();
 	
-	public List<Interfaces> getAll();
+	List<Interfaces> getAll();
 	
-	public String interfacesTest(InterfacesTestRequest interfacesTestRequest);
+	String interfacesTest(InterfacesTestRequest interfacesTestRequest);
 
 }

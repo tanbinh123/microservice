@@ -11,14 +11,14 @@ import com.javaweb.web.po.User;
 
 public interface FileService {
 	
-	public List<String> uploadFile(MultipartFile multipartFile[],String rootPath,User user) throws Exception;
+	List<String> uploadFile(MultipartFile multipartFile[],String rootPath,User user) throws Exception;
 	
-	public Page list(FileListRequest fileListRequest);
+	Page list(FileListRequest fileListRequest);
 
-	public Page contentList(FileContentListRequest fileContentListRequest);
+	Page contentList(FileContentListRequest fileContentListRequest);
 	
-	public com.javaweb.web.po.File fileDetail(String id);
+	com.javaweb.web.po.File fileDetail(String id);
 	
-	public void fileDelete(String id);
+	void fileDelete(String id);
 	
 }

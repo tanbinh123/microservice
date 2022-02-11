@@ -12,8 +12,8 @@ import com.javaweb.web.po.OperationLog;
 @Mapper
 public interface OperationLogDao extends DaoWapper<OperationLog> {
 	
-	public List<OperationLogListResponse> operationLogList(OperationLogListRequest operationLogListRequest);
+	List<OperationLogListResponse> operationLogList(OperationLogListRequest operationLogListRequest);
 	
-	public Long operationLogListCount(OperationLogListRequest operationLogListRequest);
+	Long operationLogListCount(OperationLogListRequest operationLogListRequest);
 	
 }

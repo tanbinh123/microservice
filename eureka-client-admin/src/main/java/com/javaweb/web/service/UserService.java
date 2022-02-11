@@ -16,38 +16,38 @@ import com.javaweb.web.po.User;
 
 public interface UserService {
 	
-	public User userLogin(UserLoginRequest userLogin);
+	User userLogin(UserLoginRequest userLogin);
 	
-	public Page userList(UserListRequest userListRequest);
+	Page userList(UserListRequest userListRequest);
 	
-	public void userDelete(String userId);
+	void userDelete(String userId);
 
-	public void userAdd(User user);
+	void userAdd(User user);
 
-	public void userAdd(User currentUser,UserAddRequest userAddRequest);
+	void userAdd(User currentUser,UserAddRequest userAddRequest);
 
-	public void userModify(User user);
+	void userModify(User user);
 	
-	public void userModify(User currentUser,UserModifyRequest userModifyRequest);
+	void userModify(User currentUser,UserModifyRequest userModifyRequest);
 	
-	public User userDetail(String userId);
+	User userDetail(String userId);
 	
-	public List<User> getUsersByUserId(List<String> list);
+	List<User> getUsersByUserId(List<String> list);
 	
-	public List<RoleInfoResponse> userRoleInfo(String userId);
+	List<RoleInfoResponse> userRoleInfo(String userId);
 	
-	public void userRoleAssignment(String userId,List<RoleIdAndStrategyRequest> list);
+	void userRoleAssignment(String userId,List<RoleIdAndStrategyRequest> list);
 	
-	public List<ModuleInfoResponse> userModuleInfo(String userId);
+	List<ModuleInfoResponse> userModuleInfo(String userId);
 	
-	public void userModuleAssignment(UserModuleAssignmentRequest userModuleAssignmentRequest);
+	void userModuleAssignment(UserModuleAssignmentRequest userModuleAssignmentRequest);
 	
-	public List<User> getAllUsers();
+	List<User> getAllUsers();
 	
-	public void userInitPassword(String userId,TokenData tokenData);
+	void userInitPassword(String userId,TokenData tokenData);
 	
-	//public void userPortraitUpload(String userId,MultipartFile multipartFile);
+	//void userPortraitUpload(String userId,MultipartFile multipartFile);
 
-	//public void userPortrait(String userId,HttpServletResponse httpServletResponse);
+	//void userPortrait(String userId,HttpServletResponse httpServletResponse);
 	
 }

@@ -8,18 +8,18 @@ import com.javaweb.web.po.Dictionary;
 
 public interface DictionaryService {
     
-    public List<Dictionary> selectAll();
+    List<Dictionary> selectAll();
     
-    public List<Dictionary> getDictionary(Dictionary dictionary);
+    List<Dictionary> getDictionary(Dictionary dictionary);
     
-    public void dictionaryAdd(Dictionary dictionary);
+    void dictionaryAdd(Dictionary dictionary);
     
-    public Page dictionaryList(DictionaryListRequest dictionaryListRequest);
+    Page dictionaryList(DictionaryListRequest dictionaryListRequest);
     
-    public void dictionaryModify(Dictionary dictionary);
+    void dictionaryModify(Dictionary dictionary);
     
-    public Dictionary dictionaryDetail(String dictionaryId);
+    Dictionary dictionaryDetail(String dictionaryId);
     
-    public void dictionaryDelete(String dictionaryId);
+    void dictionaryDelete(String dictionaryId);
 	
 }

@@ -15,20 +15,20 @@ import com.javaweb.web.po.User;
 @Mapper
 public interface UserDao extends DaoWapper<User> {
 	
-	public List<UserListResponse> userList(UserListRequest userListRequest);
+	List<UserListResponse> userList(UserListRequest userListRequest);
 	
-	public Long userListCount(UserListRequest userListRequest);
+	Long userListCount(UserListRequest userListRequest);
 	
-	public void userDelete(String userId);
+	void userDelete(String userId);
 	
-	public List<User> getUsersByUserId(List<String> list);
+	List<User> getUsersByUserId(List<String> list);
 	
-	public List<RoleInfoResponse> userRoleInfo(String userId);
+	List<RoleInfoResponse> userRoleInfo(String userId);
 	
-	public void userRoleAssignment(Map<String,Object> map);
+	void userRoleAssignment(Map<String,Object> map);
 	
-	public List<ModuleInfoResponse> userModuleInfo(String userId);
+	List<ModuleInfoResponse> userModuleInfo(String userId);
 	
-	public void userModuleAssignment(Map<String,Object> map);
+	void userModuleAssignment(Map<String,Object> map);
 	
 }
