@@ -25,11 +25,11 @@ export class HttpService {
         'Content-Type':requestHeader.contentType,
         'Access-Control-Allow-Headers':'Authorization',
         'Api-Version':ApiConstant.API_VERSION,
-        'requestContentType':requestHeader.requestContentType,
-        'nonce':requestHeader.nonce,
-        'token':requestHeader.token,
-        'time':requestHeader.time,
-        'alias':requestHeader.alias
+        requestContentType:requestHeader.requestContentType,
+        nonce:requestHeader.nonce,
+        token:requestHeader.token,
+        time:requestHeader.time,
+        alias:requestHeader.alias
     });
     let options = {headers:headers,withCredentials:true};
     return options;

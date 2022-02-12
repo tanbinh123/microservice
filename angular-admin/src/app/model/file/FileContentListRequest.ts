@@ -1,4 +1,4 @@
-import { CommonConstant } from "src/app/constant/CommonConstant";
+import { CommonConstant } from 'src/app/constant/CommonConstant';
 
 export class FileContentListRequest {
 

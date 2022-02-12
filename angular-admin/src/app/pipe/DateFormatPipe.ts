@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 import { CommonConstant } from '../constant/CommonConstant';
 
 //默认日期格式化类型
-const DEFAULT_DATE_FORMAT:string = 'yyyy-MM-dd HH:mm:ss';
+const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';
 
 /**
  * 用例

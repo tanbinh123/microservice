@@ -5,17 +5,17 @@ const rgbNum:any = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 
 //使用：在@NgModule中的declarations中引入LoginKeyDownDirective
 //注意：A directive must belong to exactly one NgModule. Do not re-declare a directive imported from another module.
 @Directive({
-  selector: '[loginKeyDownDirective]'
+  selector: '[appLoginKeyDown]'
 })
 export class LoginKeyDownDirective {
 
-  @HostBinding('style.color') 
+  @HostBinding('style.color')
   public color:string;
 
-  @HostBinding('style.borderColor') 
+  @HostBinding('style.borderColor')
   public borderColor:string;
 
-  @HostListener('keydown') 
+  @HostListener('keydown')
   public onKeydown():void {
     let rgb = '#';
     for(let i=0;i<6;i++){

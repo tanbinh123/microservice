@@ -1,5 +1,5 @@
-import { RequestUrl } from "../model/common/RequestUrl";
-import { CommonConstant } from "./CommonConstant";
+import { RequestUrl } from '../model/common/RequestUrl';
+import { CommonConstant } from './CommonConstant';
 
 export class ApiConstant{
 
