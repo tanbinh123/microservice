@@ -33,12 +33,6 @@ public class SystemConstant {
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
 	
 	public static final String URL_ALL_PATTERN = "/*";
-	
-	public static final String URL_WEB_INTERCEPTOR_START_PREFIX = "/web";
-	
-	public static final String URL_WEB_INTERCEPTOR_PATTERN = "/web/**";
-	
-	public static final String URL_APP_INTERCEPTOR_PATTERN = "/app/**";
 
 	public static final String TOKEN_AES_KEY = "+6'V^QgAEiV!GmvL&MkL6~fh";//SecretUtil.defaultGenRandomPass(24);//这里固定写死，如果动态的话相当于服务器每次重启都不一样，但是分布式部署时需要考虑值的统一
 

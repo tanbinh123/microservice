@@ -9,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.javaweb.constant.SystemConstant;
-import com.javaweb.interceptor.AppPermissionInterceptor;
 import com.javaweb.interceptor.WebPermissionInterceptor;
 import com.javaweb.resolver.TokenDataHandlerMethodArgumentResolver;
 
@@ -24,8 +22,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     */
 
     public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new WebPermissionInterceptor()).addPathPatterns(SystemConstant.URL_WEB_INTERCEPTOR_PATTERN);//拦截/web下面的所有请求
-		registry.addInterceptor(new AppPermissionInterceptor()).addPathPatterns(SystemConstant.URL_APP_INTERCEPTOR_PATTERN);//拦截/app下面的所有请求
+		registry.addInterceptor(new WebPermissionInterceptor());
+		//registry.addInterceptor(new WebPermissionInterceptor()).addPathPatterns("/web/**");//拦截/web下面的所有请求
     }
     
     //更加细化的可以在Controller中写为:@CrossOrigin(origins="http://192.168.1.100:8080",maxAge=3600)

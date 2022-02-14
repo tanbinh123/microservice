@@ -29,20 +29,23 @@ public class WebPermissionInterceptor implements HandlerInterceptor {
 		if(request.getMethod().toUpperCase().equals("OPTIONS")){
             return true;//通过所有OPTIONS请求
         }
+		AuthEnum authEnum = urlPermission(handler); 
+		if(AuthEnum.NO_LOGIN==authEnum){
+			return true;
+		}
 		TokenData tokenData = BaseInject.getTokenData(BaseInject.getToken(request)); 
 		if((tokenData==null)||(tokenData.getUser()==null)||(CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(tokenData.getUser().getUserId())))){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
 		}
-        Long redisSessionTimeout = Long.parseLong(BaseInject.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		AuthEnum authEnum = urlPermission(handler);
-        String redisTokenKey = BaseInject.getRedisTokenKey(tokenData);
-		if(AuthEnum.LOGIN==authEnum||AuthEnum.NO_LOGIN==authEnum){
-        	BaseInject.getRedisTemplate().opsForValue().set(redisTokenKey,tokenData,Duration.ofMinutes(redisSessionTimeout));
+		Long redisSessionTimeout = Long.parseLong(BaseInject.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
+		String redisTokenKey = BaseInject.getRedisTokenKey(tokenData);
+		if(AuthEnum.LOGIN==authEnum){
+			BaseInject.getRedisTemplate().opsForValue().set(redisTokenKey,tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 		//HandlerMethod handlerMethod = (HandlerMethod)handler;
-	    //String classMethod = handlerMethod.getBeanType().getName() + CommonConstant.POUND + handlerMethod.getMethod().getName();
+		//String classMethod = handlerMethod.getBeanType().getName() + CommonConstant.POUND + handlerMethod.getMethod().getName();
 		//classMethod.equals(interfaces.getClassMethod()
 		Interfaces interfaces = (Interfaces)request.getAttribute(SystemConstant.REQUEST_URL_CHAIN_ATTRIBUTE_NAME);
 		if(interfaces==null||interfaces.getUrl()==null||CommonConstant.EMPTY_VALUE.equals(interfaces.getUrl().trim())){

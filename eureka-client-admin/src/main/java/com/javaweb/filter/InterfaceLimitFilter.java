@@ -55,10 +55,6 @@ public class InterfaceLimitFilter implements Filter {
 			chain.doFilter(request,response);
 			return;
 		}
-		//if(httpServletRequest.getServletPath().startsWith("/actuator")){//监控暂时请求放行
-		//	chain.doFilter(request,response);
-		//	return;
-		//}
 		ServletRequestPathUtils.parseAndCache(httpServletRequest);//新版本需要加上这段代码
 		Interfaces interfaces = BaseSystemMemory.getMatchRequestMapping(httpServletRequest);//虽然需要遍历匹配但这是最准确的路径匹配方式
 		if(interfaces!=null){
@@ -82,6 +78,12 @@ public class InterfaceLimitFilter implements Filter {
 				chain.doFilter(request,response);
 			}
 		}else{
+			/**
+			if(httpServletRequest.getServletPath().startsWith("/actuator")){//监控暂时请求放行
+				chain.doFilter(request,response);
+				return;
+			}
+			*/
 			httpServletRequest.getRequestDispatcher(ApiConstant.NOT_FOUND).forward(request,response);
 		}
 	}
