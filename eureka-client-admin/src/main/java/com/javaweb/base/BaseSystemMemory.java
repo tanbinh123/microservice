@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,8 +23,10 @@ public class BaseSystemMemory {
     public static Map<String,RequestMappingInfo> requestMappingUrlMap = new HashMap<>();
     
     public static List<Dictionary> dictionaryList = new ArrayList<>();
+    public static Map<String,Dictionary> keyCodeDictionaryMap = new HashMap<>();
     
     public static List<Config> configList = new ArrayList<>(); 
+    public static Map<String,Config> keyCodeConfigMap = new HashMap<>();
 
     public static List<Interfaces> interfacesList = new ArrayList<>(); 
     
@@ -47,12 +48,15 @@ public class BaseSystemMemory {
     }
     
     public static Dictionary getDictionaryByKey(String key){
+    	/**
     	Dictionary dictionary = null;
     	Optional<Dictionary> optional = dictionaryList.stream().filter(each->{return each.getKeyCode().equals(key);}).findFirst();
     	if(optional.isPresent()){
     		dictionary = optional.get();
     	}
     	return dictionary;
+    	*/
+    	return keyCodeDictionaryMap.get(key);
     }
     
     public static String getDictionaryValueByKey(String key){
@@ -79,12 +83,15 @@ public class BaseSystemMemory {
     }
     
     public static Config getConfigByKey(String key){
+    	/**
     	Config config = null;
     	Optional<Config> optional = configList.stream().filter(each->{return each.getKeyCode().equals(key);}).findFirst();
     	if(optional.isPresent()){
     		config = optional.get();
     	}
     	return config;
+    	*/
+    	return keyCodeConfigMap.get(key);
     }
     
     public static String getConfigValueByKey(String key){
