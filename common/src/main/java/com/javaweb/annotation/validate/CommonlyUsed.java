@@ -21,7 +21,7 @@ import com.javaweb.enums.CommonCheckEnum;
 @Constraint(validatedBy=CommonlyUsedClass.class)
 public @interface CommonlyUsed {
 
-	CommonCheckEnum commonCheckEnum();
+	CommonCheckEnum type();
 	
 	boolean allowEmpty() default false;//是否允许空（允许空时将不做校验，不允许空时将做校验）
 	
@@ -49,7 +49,7 @@ class CommonlyUsedClass implements ConstraintValidator<CommonlyUsed,Object> {
 			}
 			if(value!=null) {
 				String checkValue = value.toString().trim();
-				CommonCheckEnum commonCheckEnum = commonlyUsed.commonCheckEnum();
+				CommonCheckEnum commonCheckEnum = commonlyUsed.type();
 				switch(commonCheckEnum){
 					case ID_CARD:
 						return IdCardCheck.check(checkValue);
