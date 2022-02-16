@@ -4,7 +4,7 @@ public enum CommonCheckEnum {
 
 	ID_CARD,//身份证
 	
-	E_MAIL,//邮箱
+	USCC,//统一社会信用代码
 	
 	CAR_NO,//车牌号
 	
