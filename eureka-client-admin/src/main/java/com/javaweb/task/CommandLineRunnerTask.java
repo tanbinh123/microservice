@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.javaweb.annotation.task.DistributedTimedTask;
 import com.javaweb.base.BaseService;
 import com.javaweb.base.BaseSystemMemory;
+import com.javaweb.config.redis.RedisMqReceive;
 import com.javaweb.web.po.Config;
 import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.Interfaces;
@@ -25,12 +26,12 @@ public class CommandLineRunnerTask extends BaseService implements CommandLineRun
     public void run(String... args) throws Exception {
     	Thread taskThread_1 = new Thread(()->{
     		List<Config> list = configService.selectAll();
-        	BaseSystemMemory.configList = list;
-        	logger.info("[将配置表数据加载进内存]执行完毕");
+    		RedisMqReceive.updateConfigInfo(list);
+    		logger.info("[将配置表数据加载进内存]执行完毕");
     	});
     	Thread taskThread_2 = new Thread(()->{
     		List<Dictionary> list = dictionaryService.selectAll(); 
-        	BaseSystemMemory.dictionaryList = list;
+    		RedisMqReceive.updateDictionaryInfo(list);
         	logger.info("[将字典表数据加载进内存]执行完毕");
     	});
     	Thread taskThread_3 = new Thread(()->{
