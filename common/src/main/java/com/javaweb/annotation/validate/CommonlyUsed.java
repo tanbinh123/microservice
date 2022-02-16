@@ -10,6 +10,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
+import com.javaweb.annotation.validate.impl.CarNoCheck;
+import com.javaweb.annotation.validate.impl.IdCardCheck;
+import com.javaweb.annotation.validate.impl.PhoneNoCheck;
+import com.javaweb.annotation.validate.impl.UsccCodeCheck;
 import com.javaweb.enums.CommonCheckEnum;
 
 @Target({ElementType.FIELD})
@@ -44,25 +48,19 @@ class CommonlyUsedClass implements ConstraintValidator<CommonlyUsed,Object> {
 				return true;
 			}
 			if(value!=null) {
-				String checkValue = value.toString();
-				System.out.println(checkValue);//TODO
+				String checkValue = value.toString().trim();
 				CommonCheckEnum commonCheckEnum = commonlyUsed.commonCheckEnum();
 				switch(commonCheckEnum){
 					case ID_CARD:
-						//TODO
-						return true;
-					case E_MAIL:
-						//TODO
-						return true;
+						return IdCardCheck.check(checkValue);
+					case USCC:
+						return UsccCodeCheck.check(checkValue);
 					case CAR_NO:
-						//TODO
-						return true;
+						return CarNoCheck.check(checkValue);
 					case PHONE_NO:
-						//TODO
-						return true;
+						return PhoneNoCheck.check(checkValue);
 					default:
 						return false;
-					
 				}
 			}
 		}catch(Exception e){
