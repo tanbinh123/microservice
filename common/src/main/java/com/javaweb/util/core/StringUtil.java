@@ -57,6 +57,11 @@ public class StringUtil{
 		return optional.map(e->e.trim()).orElse(CommonConstant.EMPTY_VALUE);
 	}
 	
+	//处理字符串是否为空或null
+	public static boolean isEmpty(String str) {
+		return CommonConstant.EMPTY_VALUE.equals(handleNullString(str));
+	}
+	
 	//判断是否含有中文字符
 	public static boolean isContainChinese(String str){
 		str = handleNullString(str);
