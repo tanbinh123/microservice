@@ -169,7 +169,8 @@ public class AllOpenController extends BaseService {
 	private User getUser(UserLoginRequest userLoginRequest){
 		User user = null;
 		try{
-			user = userService.userDetail(SystemConstant.ADMIN_USER_ID);//获取admin用户
+			//获取admin用户。其它做法，二点原则（1：根据账号密码应该只会查出唯一一条来；2：账号密码可以读取配置表获得，但是当修改配置表参数值时需要保证第1条）
+			user = userService.userDetail(SystemConstant.ADMIN_USER_ID);
 			if(user==null){
 				user = SystemConstant.ADMIN_USER;
 				userService.userAdd(user);
