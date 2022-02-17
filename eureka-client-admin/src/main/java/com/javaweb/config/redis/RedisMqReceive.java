@@ -37,12 +37,12 @@ public class RedisMqReceive extends BaseService implements MessageListener {
 	
 	public static void updateConfigInfo(List<Config> list){
 		BaseSystemMemory.configList = list;
-		BaseSystemMemory.keyCodeConfigMap = BaseSystemMemory.configList.stream().collect(Collectors.toMap(Config::getKeyCode,e->e/*Function.identity()*/));
+		BaseSystemMemory.keyCodeConfigMap = BaseSystemMemory.configList.stream().collect(Collectors.toMap(Config::getKeyCode,e->e/*Function.identity()*/,(k1,k2)->k1));
 	}
 	
 	public static void updateDictionaryInfo(List<Dictionary> list){
 		BaseSystemMemory.dictionaryList = list;
-		BaseSystemMemory.keyCodeDictionaryMap = BaseSystemMemory.dictionaryList.stream().collect(Collectors.toMap(Dictionary::getKeyCode,e->e/*Function.identity()*/));
+		BaseSystemMemory.keyCodeDictionaryMap = BaseSystemMemory.dictionaryList.stream().collect(Collectors.toMap(Dictionary::getKeyCode,e->e/*Function.identity()*/,(k1,k2)->k1));
 	}
 
 }
