@@ -1,6 +1,6 @@
 # Angular V1.0          
 # 一、项目重要说明          
-1、angular版本为：13.1.1    
+1、angular版本为：13.2.2    
 2、关于package.json    
 dependencies的较小基础依赖为：@angular/animations、@angular/common、@angular/compiler、@angular/core、@angular/forms、@angular/platform-browser、@angular/platform-browser-dynamic、@angular/router、rxjs    
 devDependencies的较小基础依赖为：@angular-devkit/build-angular、@angular/cli、@angular/compiler-cli、@types/jasmine、@types/jasminewd2、@types/node、jasmine-core、jasmine-spec-reporter、karma、karma-chrome-launcher、karma-coverage-istanbul-reporter、karma-jasmine、karma-jasmine-html-reporter、typescript、codelyzer    
