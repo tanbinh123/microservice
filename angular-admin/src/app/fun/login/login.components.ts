@@ -17,6 +17,7 @@ import { RequestUrl } from 'src/app/model/common/RequestUrl';
 
 export class LoginComponent implements OnInit {
 
+  version:string = ApiConstant.API_VERSION;
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
 
   constructor(public httpService:HttpService,
