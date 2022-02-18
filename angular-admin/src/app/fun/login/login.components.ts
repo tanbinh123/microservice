@@ -9,6 +9,7 @@ import { SessionService } from 'src/app/service/SessionService';
 import { RequestHeader } from 'src/app/model/common/RequestHeader';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
 import {PrimeNGConfig} from "primeng/api";
+import {CommonConstant} from "../../constant/CommonConstant";
 
 @Component({
   selector: 'app-web-login',
@@ -18,6 +19,7 @@ import {PrimeNGConfig} from "primeng/api";
 
 export class LoginComponent implements OnInit {
 
+  errorMessage:string = CommonConstant.EMPTY;
   version:string = ApiConstant.API_VERSION;
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
 
@@ -67,20 +69,24 @@ export class LoginComponent implements OnInit {
                   //console.log('更新后：',ApiConstant.URL_MAP);
                   this.router.navigate(['web']);
                 }else{
-                  alert(result.message);
+                  //alert(result.message);
+                  this.errorMessage = result.message;
                 }
               },
               error:e => {
-                alert(e);
+                //alert(e);
+                this.errorMessage = e.message;
               },
               complete:() => {}
             });
           }else{
-            alert(result.message);
+            //alert(result.message);
+            this.errorMessage = result.message;
           }
         },
         error:e => {
-          alert(e.message)
+          //alert(e.message)
+          this.errorMessage = e.message;
         },
         complete:() => {}
       }
