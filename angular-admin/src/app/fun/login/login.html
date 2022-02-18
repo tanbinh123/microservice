@@ -1,23 +1,27 @@
 <div class="loginImage">
   <div class="login">
-    <div class="input-group">
-      <h2>后台管理系统{{version}}</h2>
-    </div>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">账号</span>
+    <div class="grid p-fluid">
+      <div class="col-12 md:col-4">
+        <h4>后台管理系统{{version}}</h4>
       </div>
-      <input type="text" [(ngModel)]="userLoginRequest.username" class="form-control" placeholder="请输入账号" maxlength="20" appLoginKeyDown/>
-    </div>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">密码</span>
+      <div class="col-12 md:col-4">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">账号</span>
+          <input type="text" pInputText placeholder="请输入账号" [(ngModel)]="userLoginRequest.username" maxlength="20" appLoginKeyDown/>
+        </div>
+        <div class="p-inputgroup" style="margin-top: 1px">
+          <span class="p-inputgroup-addon">密码</span>
+          <input type="password" pInputText placeholder="请输入密码" [(ngModel)]="userLoginRequest.password" maxlength="20" (keydown.enter)="keydownEnter($event)"/>
+        </div>
       </div>
-      <input type="password" [(ngModel)]="userLoginRequest.password" class="form-control" placeholder="请输入密码" maxlength="20" (keydown.enter)="keydownEnter($event)"/>
     </div>
-    <div class="input-group">
-      <button type="button" (click)="demo()" class="btn btn-primary">Angular示例</button>
-      <button type="button" (click)="login()" class="btn btn-primary" style="margin-left:auto">登录</button>
+    <div class="grid p-fluid">
+      <div class="col-12 md:col-4">
+        <div class="p-inputgroup">
+          <button pButton pRipple type="button" label="Angular示例" class="p-button-info" (click)="demo()"></button>
+          <button pButton pRipple type="button" label="登录" class="p-button-info" (click)="login()" style="margin-left: 3px"></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
