@@ -8,6 +8,7 @@ import { ApiConstant } from 'src/app/constant/ApiConstant';
 import { SessionService } from 'src/app/service/SessionService';
 import { RequestHeader } from 'src/app/model/common/RequestHeader';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
+import {PrimeNGConfig} from "primeng/api";
 
 @Component({
   selector: 'app-web-login',
@@ -23,12 +24,13 @@ export class LoginComponent implements OnInit {
   constructor(public httpService:HttpService,
               public sessionService:SessionService,
               public router:Router,
-              public datePipe:DatePipe) {
+              public datePipe:DatePipe,
+              private primengConfig:PrimeNGConfig) {
 
   }
 
   ngOnInit() {
-
+    this.primengConfig.ripple = true;
   }
 
   //回车事件
