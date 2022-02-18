@@ -9,7 +9,7 @@
   justify-items: flex-start;
   align-items: center;
 }
-.login h2 {
+.login h4 {
   color: #000000;
   font-weight: bold;
 }
@@ -26,10 +26,6 @@
   -webkit-background-size: cover;
   -o-background-size: cover;
 }
-.input-group {
-  margin-top: 1.5%;
-}
-.input-group-text {
-  color: black;
-  font-weight: bold;
+.p-inputgroup {
+  margin-top: 2%;
 }
