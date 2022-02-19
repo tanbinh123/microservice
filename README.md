@@ -22,7 +22,7 @@ client2:2002
 client3:2003    
 # 二、项目重要说明          
 1、本项目有很多不足和BUG（水平有限），尤其是前端angular（正在考虑是否替换，所以目前仅做页面简单的展示下），因此更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新eureka-client-admin/src/main/resources/sql/init.sql并重新cnpm install）    
-2、本项目默认使用自己“造的轮子”——数据库通用CRUD接口，还有很多不足，比如新增成功后目前无法返回主键ID    
+2、本项目默认使用自己“造的轮子”——数据库通用CRUD接口，还有很多不足    
 3、本项目暂时未对请求体和返回体进行加解密，即明文传输；加解密后端暂时可以参考SecretRequest.java，前端暂时可以参考HttpService.ts和SecretUtil.ts    
 4、本项目前后端分离在session上没有使用spring-session-redis，而是自己“造的轮子”    
 5、本项目后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句    
@@ -59,7 +59,7 @@ public class Test{
 A、java -jar demo.jar --spring.config.location=/tmp/test/application.properties    
 B、java -jar demo.jar --spring.profiles.active=dev    
 C、java -jar demo.jar然后在同一目录下建一个config文件夹，里面放个配置文件：application.properties    
-如果读取war包的话参考JavaWeb2-integration-demo里的pom.xml    
+如果读取war包的话参考integration-demo里的pom.xml    
 6、满足相关条件再注入可以使用@Conditional及其扩展    
 @Conditional    
 @ConditionalOnBean：当容器里有指定Bean的条件下    

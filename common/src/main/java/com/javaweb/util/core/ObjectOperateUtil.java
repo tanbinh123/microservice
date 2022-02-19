@@ -24,15 +24,15 @@ import net.sf.json.processors.JsonValueProcessor;
 
 public class ObjectOperateUtil {
 	
-	private static final String METHOD_GET = "get"; 
+	public static final String METHOD_GET = "get"; 
 	
-	private static final String METHOD_SET = "set";
+	public static final String METHOD_SET = "set";
 	
-	private static final Object[] NULL_OBJECT = new Object[]{};//无返回值（void）
+	public static final Object[] NULL_OBJECT = new Object[]{};//无返回值（void）
 	
-	private static final Class<?>[] NULL_CLASS = new Class[]{};//无参
+	public static final Class<?>[] NULL_CLASS = new Class[]{};//无参
 	
-	private static final ObjectSizeCalculator OBJECT_SIZE_CALCULATOR = new ObjectSizeCalculator(ObjectSizeCalculator.getEffectiveMemoryLayoutSpecification());
+	public static final ObjectSizeCalculator OBJECT_SIZE_CALCULATOR = new ObjectSizeCalculator(ObjectSizeCalculator.getEffectiveMemoryLayoutSpecification());
 	
 	/**
 	 * 集合对象去重 

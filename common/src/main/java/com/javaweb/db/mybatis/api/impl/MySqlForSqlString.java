@@ -1,5 +1,6 @@
 package com.javaweb.db.mybatis.api.impl;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,7 +8,10 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.db.help.SqlBuildInfo;
 import com.javaweb.db.help.SqlCondition;
 import com.javaweb.db.query.QueryWapper;
+import com.javaweb.enums.CamelCaseEnum;
 import com.javaweb.enums.SqlConditionEnum;
+import com.javaweb.util.core.ObjectOperateUtil;
+import com.javaweb.util.core.StringUtil;
 
 public class MySqlForSqlString implements SqlString {
 	
@@ -27,7 +31,17 @@ public class MySqlForSqlString implements SqlString {
 		}else{
 			for(int i=0;i<columnList.size();i++){
 				if(sqlBuildInfo.getIdAutoCreate()&&Objects.equals(sqlBuildInfo.getId(),columnList.get(i))){
-					entityValueList.set(i,getIdAutoCreate());
+					Object idAutoCreate = getIdAutoCreate();
+					entityValueList.set(i,idAutoCreate);
+					//获取主键的值 start
+					try {
+						Class<?> cls = sqlBuildInfo.getParameterValue().getClass();
+						Method method = cls.getMethod(ObjectOperateUtil.METHOD_SET+StringUtil.camelCaseConvert(columnList.get(i),CamelCaseEnum.FIRST_WORD_UPPER),entityValueList.get(i).getClass());
+						method.invoke(sqlBuildInfo.getParameterValue(),idAutoCreate);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					//获取主键的值 end
 					break;
 				}
 			}
