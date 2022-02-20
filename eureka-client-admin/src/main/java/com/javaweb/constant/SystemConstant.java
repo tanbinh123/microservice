@@ -1,6 +1,7 @@
 package com.javaweb.constant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
-public class SystemConstant {
+public final class SystemConstant {
 	
 	public static final String SYSTEM_NO = "1";
 	
@@ -88,7 +89,11 @@ public class SystemConstant {
 		ADMIN_USER.setDelFlag(CommonConstant.ZERO_NUMBER_VALUE);/**改造代码时不建议修改此值*/
 	}
 	
-	public static final List<Module> EMPTY_MODULE_LSIT = new ArrayList<>();
-	public static final List<ExcludeInfoResponse> EMPTY_EXCLUDE_INFO_RESPONSE_LSIT = new ArrayList<>();
+	/** 数组、集合定义为final依然是可以被修改的，所以采用下面的写法（数组：数组.clone()） */
+	private static final List<Module> E_M_L = new ArrayList<>();
+	public static final List<Module> EMPTY_MODULE_LSIT = Collections.unmodifiableList(E_M_L);
+
+	private static final List<ExcludeInfoResponse> E_E_I_R_L = new ArrayList<>();
+	public static final List<ExcludeInfoResponse> EMPTY_EXCLUDE_INFO_RESPONSE_LSIT = Collections.unmodifiableList(E_E_I_R_L);
 	
 }

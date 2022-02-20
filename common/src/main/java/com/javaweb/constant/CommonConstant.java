@@ -1,6 +1,6 @@
 package com.javaweb.constant;
 
-public class CommonConstant {
+public final class CommonConstant {
 	
 	//0值数值
     public static final Integer ZERO_NUMBER_VALUE = 0;
