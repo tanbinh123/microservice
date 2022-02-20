@@ -1,12 +1,7 @@
 package com.javaweb.constant;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
-import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
-import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
 public final class SystemConstant {
@@ -90,10 +85,9 @@ public final class SystemConstant {
 	}
 	
 	/** 数组、集合定义为final依然是可以被修改的，所以采用下面的写法（数组：数组.clone()） */
-	private static final List<Module> E_M_L = new ArrayList<>();
-	public static final List<Module> EMPTY_MODULE_LSIT = Collections.unmodifiableList(E_M_L);
-
-	private static final List<ExcludeInfoResponse> E_E_I_R_L = new ArrayList<>();
-	public static final List<ExcludeInfoResponse> EMPTY_EXCLUDE_INFO_RESPONSE_LSIT = Collections.unmodifiableList(E_E_I_R_L);
+	//private static final List<Module> E_M_L = new ArrayList<>();
+	//public static final List<Module> EMPTY_MODULE_LSIT = Collections.unmodifiableList(E_M_L);
+	//或
+	//public static final List<Module> EMPTY_MODULE_LSIT = Collections.emptyList();
 	
 }

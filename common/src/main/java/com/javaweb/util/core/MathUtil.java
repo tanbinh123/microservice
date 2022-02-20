@@ -3,6 +3,7 @@ package com.javaweb.util.core;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.LongStream;
 
 import org.mvel2.MVEL;
@@ -194,8 +195,8 @@ public class MathUtil {
 	
 	//获取随机数(范围为[0,seed))(L:Left;C:close;R:right;O:open)
 	public static int getRandomNumForLCRO(int seed){
-		int num = (int)(Math.random()*seed);
-		return num;
+		//return (int)(Math.random()*seed);
+		return ThreadLocalRandom.current().nextInt(seed);
 	}
 	
 	//获取随机数(范围为[min,max))(L:Left;C:close;R:right;O:open)

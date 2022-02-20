@@ -1,6 +1,7 @@
 package com.javaweb.web.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,7 +88,7 @@ public class ModuleServiceImpl extends BaseDao implements ModuleService {
 			}
 			allList = allList.stream().distinct().collect(Collectors.toList());
 			if(allList.size()<=0){
-				return SystemConstant.EMPTY_MODULE_LSIT;
+				return Collections.emptyList();
 			}else{
 				return moduleDao.getModuleByModuleId(allList);
 			}

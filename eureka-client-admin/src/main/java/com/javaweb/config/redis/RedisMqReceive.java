@@ -29,8 +29,7 @@ public class RedisMqReceive extends BaseService implements MessageListener {
 			return;
 		}
 		if(SystemConstant.INTERFACES_TOPIC.equals(channel)){
-			//更新接口表
-			BaseSystemMemory.interfacesList = interfacesService.getAll();
+			BaseSystemMemory.interfacesList = interfacesService.getAll();//更新接口表
 			return;
 		}
 	}

@@ -11,7 +11,6 @@ import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,8 +52,12 @@ public class StringUtil{
 	
 	//处理字符串的null值,如果为null返回空
 	public static String handleNullString(String str) {
-		Optional<String> optional = Optional.ofNullable(str);
-		return optional.map(e->e.trim()).orElse(CommonConstant.EMPTY_VALUE);
+		//Optional<String> optional = Optional.ofNullable(str);
+		//return optional.map(e->e.trim()).orElse(CommonConstant.EMPTY_VALUE);
+		if(str==null){
+			return CommonConstant.EMPTY_VALUE;
+		}
+		return str.trim();
 	}
 	
 	//处理字符串是否为空或null

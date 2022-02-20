@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -91,7 +91,7 @@ public class ArrayUtil {
 	
 	//从集合中随机抽取N个数
 	public static List<Object> getRandomNum(List<Object> list,long size){
-		return new Random().ints(size,0,list.size()).mapToObj(list::get/*remove*/)/*.distinct()*/.collect(Collectors.toList());
+		return ThreadLocalRandom.current().ints(size,0,list.size()).mapToObj(list::get/*remove*/)/*.distinct()*/.collect(Collectors.toList());
 	}
 	
 	//获取两个数组的交集

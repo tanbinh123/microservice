@@ -2,6 +2,7 @@ package com.javaweb.web.service.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -283,7 +284,7 @@ public class InterfacesServiceImpl extends BaseDao implements InterfacesService 
 		allList = allList.stream().distinct().collect(Collectors.toList());
 		//5、获得data_permission集合
 		if(allList.size()<=0){
-			return SystemConstant.EMPTY_EXCLUDE_INFO_RESPONSE_LSIT;
+			return Collections.emptyList();
 		}else{
 			return dataPermissionDao.selectExcludeInfo(allList);
 		}
