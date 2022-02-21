@@ -13,11 +13,11 @@ import javax.validation.Payload;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy=IntegerValueClass.class)
-public @interface ValueRange {
+public @interface IntegerValueRange {
 
 	int[] vauleArray() default {};//特定数值列表
 	
-	boolean allowEmpty() default false;//是否允许空（允许空时将不做校验，不允许空时将做校验）
+	boolean allowEmpty() default false;//是否允许空（允许空时为空值将不做校验，只有不为空时才做校验）
 	
 	/* ↓↓↓↓↓↓↓↓↓↓严格模式下必须有↓↓↓↓↓↓↓↓↓↓ */
 	String message() default "validated.check.fail";//全局通用参数校验失败信息
@@ -27,11 +27,11 @@ public @interface ValueRange {
 	
 }
 
-class IntegerValueClass implements ConstraintValidator<ValueRange,Object> {
+class IntegerValueClass implements ConstraintValidator<IntegerValueRange,Object> {
     
-	protected ValueRange valueRange;
+	protected IntegerValueRange valueRange;
 	
-	public void initialize(ValueRange valueRange) {
+	public void initialize(IntegerValueRange valueRange) {
 		this.valueRange = valueRange;
 	}
 
@@ -39,7 +39,9 @@ class IntegerValueClass implements ConstraintValidator<ValueRange,Object> {
 		try{
 			boolean allowEmpty = valueRange.allowEmpty();
 			if(allowEmpty){
-				return true;
+				if(value==null){
+					return true;
+				}
 			}
 			if(value!=null) {
 				int checkValue = ((Integer)value).intValue();
