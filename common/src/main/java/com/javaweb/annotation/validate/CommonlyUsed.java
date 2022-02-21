@@ -37,10 +37,12 @@ class CommonlyUsedClass implements ConstraintValidator<CommonlyUsed,Object> {
     
 	protected CommonlyUsed commonlyUsed;
 	
+	@Override
 	public void initialize(CommonlyUsed commonlyUsed) {
 		this.commonlyUsed = commonlyUsed;
 	}
 
+	@Override
 	public boolean isValid(Object value,ConstraintValidatorContext context) {
 		try{
 			boolean allowEmpty = commonlyUsed.allowEmpty();

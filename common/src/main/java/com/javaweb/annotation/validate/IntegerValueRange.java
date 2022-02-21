@@ -31,10 +31,12 @@ class IntegerValueClass implements ConstraintValidator<IntegerValueRange,Object>
     
 	protected IntegerValueRange valueRange;
 	
+	@Override
 	public void initialize(IntegerValueRange valueRange) {
 		this.valueRange = valueRange;
 	}
 
+	@Override
 	public boolean isValid(Object value,ConstraintValidatorContext context) {
 		try{
 			boolean allowEmpty = valueRange.allowEmpty();

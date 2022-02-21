@@ -31,10 +31,12 @@ class StringValueClass implements ConstraintValidator<StringValueRange,Object> {
     
 	protected StringValueRange valueRange;
 	
+	@Override
 	public void initialize(StringValueRange valueRange) {
 		this.valueRange = valueRange;
 	}
 
+	@Override
 	public boolean isValid(Object value,ConstraintValidatorContext context) {
 		try{
 			boolean allowEmpty = valueRange.allowEmpty();
