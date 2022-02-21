@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import com.javaweb.annotation.validate.ValueRange;
+import com.javaweb.annotation.validate.IntegerValueRange;
 import com.javaweb.constant.SystemConstant;
 
 import lombok.Getter;
@@ -33,10 +33,10 @@ public class UserLoginRequest implements Serializable {
 	//@Pattern(regexp=PASSWORD_REGEXP,message="validated.user.password.pattern")
 	private String password;
 	
-	@ValueRange(vauleArray={1,2,3},message="validated.user.clientType.pattern")//自定义校验
+	@IntegerValueRange(vauleArray={1,2,3},message="validated.user.clientType.pattern")//自定义校验
 	private Integer clientType = 1;//客户端类型（1：PC端（默认）；2：安卓端；3：IOS端）
 	
-	@ValueRange(vauleArray={1,2,3},message="validated.user.loginWay.pattern")//自定义校验
+	@IntegerValueRange(vauleArray={1,2,3},message="validated.user.loginWay.pattern")//自定义校验
 	private Integer loginWay = 1;//登录方式（1：账号密码登录（默认）；2：二维码扫码登录；3：短信验证码登录）
 	
 	private String time;//时间戳
