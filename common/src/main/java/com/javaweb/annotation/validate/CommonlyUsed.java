@@ -45,7 +45,9 @@ class CommonlyUsedClass implements ConstraintValidator<CommonlyUsed,Object> {
 		try{
 			boolean allowEmpty = commonlyUsed.allowEmpty();
 			if(allowEmpty){
-				return true;
+				if(value==null){
+					return true;
+				}
 			}
 			if(value!=null) {
 				String checkValue = value.toString().trim();
