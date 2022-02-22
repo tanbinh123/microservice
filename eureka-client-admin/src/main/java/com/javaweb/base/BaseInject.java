@@ -240,6 +240,7 @@ public class BaseInject {
 		return token;
 	}
 	
+	//redis的token的key增加个前缀，关联BaseInject#getRedisTokenKey和OnlineUserController#list
 	public static TokenData getTokenData(String token){
 		TokenData tokenData = null;
 		try{
@@ -248,7 +249,7 @@ public class BaseInject {
 				token = AesDesUtil.decryptAes(token,SystemConstant.TOKEN_AES_KEY);
 		    	String tokens[] = token.split(CommonConstant.COMMA);
 		    	token = tokens[1]+CommonConstant.COMMA+tokens[2]+CommonConstant.COMMA+tokens[3];//userId,clientType,loginWay
-		    	tokenData = (TokenData)(getRedisTemplate().opsForValue().get(token));
+		    	tokenData = (TokenData)(getRedisTemplate().opsForValue().get(SystemConstant.TOKEN_KEY_PREFIX + token));
 			}
 		}catch(Exception e){
 			//do nothing
@@ -256,8 +257,10 @@ public class BaseInject {
 		return tokenData;
 	}
 	
+	//redis的token的key增加个前缀，关联BaseInject#getTokenData和OnlineUserController#list
 	public static String getRedisTokenKey(TokenData tokenData){
-		return tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay();//userId,clientType,loginWay
+		return  SystemConstant.TOKEN_KEY_PREFIX + 
+				tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay();//userId,clientType,loginWay
 	}
 	
 	@SuppressWarnings("unchecked")
