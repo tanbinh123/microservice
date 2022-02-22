@@ -8,7 +8,7 @@ public final class SystemConstant {
 	
 	public static final String SYSTEM_NO = "1";
 	
-	public static final String PROJECT_GITHUB_URL = "https://github.com/tank2140896/JavaWeb2";
+	public static final String PROJECT_GITHUB_URL = "https://github.com/tank2140896/microservice";
 
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
@@ -31,6 +31,8 @@ public final class SystemConstant {
 	public static final String URL_ALL_PATTERN = "/*";
 
 	public static final String TOKEN_AES_KEY = "+6'V^QgAEiV!GmvL&MkL6~fh";//SecretUtil.defaultGenRandomPass(24);//这里固定写死，如果动态的话相当于服务器每次重启都不一样，但是分布式部署时需要考虑值的统一
+
+	public static final String TOKEN_KEY_PREFIX = "tokenKey" + CommonConstant.COLON;
 
     public static final String CONFIG_TOPIC = "CONFIG";
     
