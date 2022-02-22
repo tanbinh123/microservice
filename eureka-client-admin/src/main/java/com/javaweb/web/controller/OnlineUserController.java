@@ -2,7 +2,7 @@ package com.javaweb.web.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,11 +40,11 @@ public class OnlineUserController extends BaseService {
 	@PostMapping(ApiConstant.ONLINE_USER_LIST)
 	@ControllerMethod(interfaceName="在线用户列表接口",auth=AuthEnum.PERMISSION)
 	public BaseResponseResult list(@RequestBody OnlineUserListRequest onlineUserListRequest,@TokenDataAnnotation TokenData tokenData){
-		Set<String> set = stringRedisTemplate.keys("*,1,1");//只取页面端用账号密码登录的在线用户
-		set = (set==null?new HashSet<>():set);
+		Set<String> set = stringRedisTemplate.keys(SystemConstant.TOKEN_KEY_PREFIX+"*,1,1");//只取页面端用账号密码登录的在线用户
+		set = (set==null?Collections.emptySet():set);
 		List<String> sortedList = new ArrayList<>();
 		for(String str:set){
-			sortedList.add(str.split(CommonConstant.COMMA)[0]);
+			sortedList.add(str.split(SystemConstant.TOKEN_KEY_PREFIX)[1].split(CommonConstant.COMMA)[0]);
 		}
 		//去除管理员和当前登录用户
 		sortedList = sortedList.stream().filter(e->(!e.equals(SystemConstant.ADMIN_USER_ID))).filter(e->(!e.equals(tokenData.getUser().getUserId()))).collect(Collectors.toList());
