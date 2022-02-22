@@ -43,6 +43,7 @@ import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.AesDesUtil;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
+import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.SystemUtil;
 import com.javaweb.web.eo.TokenData;
@@ -332,7 +333,7 @@ public class BaseInject {
 	public static String getFileUploadPath(){
 		String rootPath = getFileRootPath();
 		String yearMonthDay = DateUtil.getDefaultDate(DateUtil.DATE_PATTERN_TYPE1);//年月日
-		int random = (int)(Math.random()*10);//0-9
+		int random = MathUtil.getRandomNumForLCRO(10);//(int)(Math.random()*10);//0-9
 		if(SystemUtil.isLinux()) {//linux路径
             rootPath += (random+"/"+yearMonthDay+"/");
         } else {//windows路径
