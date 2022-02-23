@@ -42,16 +42,6 @@ public class DataSourceConfig {
 	@Autowired
 	private MyBatisBaseDaoInterceptor myBatisBaseDaoInterceptor;
 
-	/**
-	 * 还可以这么写:
-	 * @Bean("mysql_d1")  
-	 * @throws SQLException 
-	 * @ConfigurationProperties(prefix="application.server.db.slave")
-	 * public DataSource mysql_d1(){
-	 *     //在配置文件（如application.properties）中添加如：application.server.db.slave.username=root
-	 * 	   return DataSourceBuilder.create().build();
-	 * }
-	 */
 	@Bean(SystemConstant.DATA_SOURCE_KEY_1)
 	public DataSource mysql_d1() {
 		HikariDataSource hikariDataSource = new HikariDataSource();
@@ -108,14 +98,7 @@ public class DataSourceConfig {
     public SqlSessionFactory sqlSessionFactory(MultipleDataSourceManage multipleDataSourceManage) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(multipleDataSourceManage);
-        /**
-         * 还可以这么写:
-         * @Autowired
-         * private Environment environment;
-         * sqlSessionFactoryBean.setTypeAliasesPackage(environment.getProperty("mybatis.typeAliasesPackage"));
-         * sqlSessionFactoryBean.setTypeAliasesPackage(environment.getProperty("mybatis.typeAliasesPackage",String.class));
-         */
-        sqlSessionFactoryBean.setTypeAliasesPackage(typeAliasesPackage);
+        sqlSessionFactoryBean.setTypeAliasesPackage(typeAliasesPackage/*environment.getProperty("mybatis.typeAliasesPackage"[,String.class])*/);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mybatisMapperLocations));
         sqlSessionFactoryBean.setPlugins(new Interceptor[]{myBatisBaseDaoInterceptor});
         return sqlSessionFactoryBean.getObject();
