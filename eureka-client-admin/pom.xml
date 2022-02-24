@@ -88,11 +88,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- 使用热部署 -->
-    	<dependency>
-    		<groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-devtools</artifactId>
-    	</dependency>
 		<!-- 数据库连接池Druid -->
 		<dependency>
 		    <groupId>com.alibaba</groupId>
@@ -104,6 +99,17 @@
 		    <groupId>com.zaxxer</groupId>
 		    <artifactId>HikariCP</artifactId>
 		</dependency>
+		<!-- jta atomikos 多数据源事务 
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jta-atomikos</artifactId>
+		</dependency>
+		-->
+		<!-- 使用热部署 -->
+    	<dependency>
+    		<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+    	</dependency>
 		<!-- netty -->
 		<dependency>
 		    <groupId>io.netty</groupId>
