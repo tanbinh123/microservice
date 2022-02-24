@@ -45,6 +45,26 @@ public class DataSource2Config {
 		druidDataSource.setTestWhileIdle(mysqlDateSource2.getTestWhileIdle());
 		druidDataSource.setMaxWait(mysqlDateSource2.getMaxWait());
 		return druidDataSource;
+		/** 参考pom.xml#spring-boot-starter-jta-atomikos
+		//如果Druid数据源支持XA事务，那么也可以将MysqlXADataSource变为类似DruidXaDataSource
+		MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
+		mysqlXADataSource.setUrl(mysqlDateSource2.getUrl());
+		mysqlXADataSource.setUser(mysqlDateSource2.getUsername());
+		mysqlXADataSource.setPassword(mysqlDateSource2.getPassword());
+		//mysqlXADataSource.setPinGlobalTxToPhysicalConnection(true);
+		AtomikosDataSourceBean atomikosDataSourceBean = new AtomikosDataSourceBean();
+		atomikosDataSourceBean.setXaDataSource(mysqlXADataSource);
+		atomikosDataSourceBean.setUniqueResourceName(SystemConstant.DATA_SOURCE_KEY_2);
+		atomikosDataSourceBean.setPoolSize(10);
+		atomikosDataSourceBean.setMaxPoolSize(100);
+		atomikosDataSourceBean.setBorrowConnectionTimeout(300);
+		//atomikosDataSourceBean.setMaxIdleTime(3600);
+		//atomikosDataSourceBean.setReapTimeout(300);
+		//atomikosDataSourceBean.setMaxLifetime(60000);
+		//atomikosDataSourceBean.setMaintenanceInterval(60);
+		//atomikosDataSourceBean.setTestQuery("select 1");
+		return atomikosDataSourceBean;
+		*/
 	}
 	
 	@Bean(SystemConstant.DATA_SOURCE_D2_JDBCTEMPLATE)
