@@ -12,21 +12,23 @@ public final class SystemConstant {
 
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
-	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";
-	
 	public static final String DEFAULT_LOG_POINT_CUT = "execution(* com.javaweb.web.controller..*.*(..))";
 	
 	public static final String DEFAULT_GLOBAL_RESPONSEBODY_PACKAGE = "com.javaweb.web.controller";
 
 	public static final String DEFAULT_DISTRIBUTED_TIMED_TASK_POINT_CUT = "@annotation(com.javaweb.annotation.task.DistributedTimedTask)";
 	
-	public static final String DATA_SOURCE_PACKAGE_NAME_1 = "ds1";
-	
-	public static final String DATA_SOURCE_PACKAGE_NAME_2 = "ds2";
-	
+	/** 多数据源 start */
 	public static final String DATA_SOURCE_KEY_1 = "mysql_d1";
+	public static final String DATA_SOURCE_PACKAGE_DS1 = "com.javaweb.web.dao.ds1";
+	public static final String DATA_SOURCE_SQL_SESSION_FACTORY_1 = "sqlSessionFactory1";
+	public static final String DATA_SOURCE_D1_JDBCTEMPLATE = "mysql_d1_JdbcTemplate";
 	
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
+	public static final String DATA_SOURCE_PACKAGE_DS2 = "com.javaweb.web.dao.ds2";
+	public static final String DATA_SOURCE_SQL_SESSION_FACTORY_2 = "sqlSessionFactory2";
+	public static final String DATA_SOURCE_D2_JDBCTEMPLATE = "mysql_d2_JdbcTemplate";
+	/** 多数据源 end */
 	
 	public static final String URL_ALL_PATTERN = "/*";
 
