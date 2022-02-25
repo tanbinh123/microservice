@@ -5,8 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +43,7 @@ public class AllOpenController extends BaseService {
 	
 	@PostMapping(ApiConstant.WEB_LOGIN)
 	@ControllerMethod(interfaceName="用户登录接口")
-	public BaseResponseResult webLogin(@RequestBody @Validated UserLoginRequest userLoginRequest,HttpServletRequest request){
+	public BaseResponseResult webLogin(@RequestBody @Validated UserLoginRequest userLoginRequest){
 		//Part1：参数常规校验 @see GlobalExceptionHandler#handleMethodArgumentNotValidException
 		//Part2：密码特殊处理
 		userLoginRequest.setPassword(passwordCheck(userLoginRequest));
@@ -72,8 +70,8 @@ public class AllOpenController extends BaseService {
         		return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userAlreadyLogin");
         	}
         }
-		setDefaultDataToRedis(key,tokenData);//key值组成：userId,clientType,loginWay
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
+		setDefaultDataToRedis(key,tokenData);//key值核心组成：userId,clientType,loginWay
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());//个人推荐这里只是获取登录token，权限信息通过其它接口获得
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
@@ -169,7 +167,7 @@ public class AllOpenController extends BaseService {
 	private User getUser(UserLoginRequest userLoginRequest){
 		User user = null;
 		try{
-			//获取admin用户。其它做法，二点原则（1：根据账号密码应该只会查出唯一一条来；2：账号密码可以读取配置表获得，但是当修改配置表参数值时需要保证第1条）
+			//获取admin用户。个人推荐符合二点原则（1：根据账号密码应该只会查出唯一一条来；2：账号密码可以读取配置表获得，但是当修改配置表参数值时需要保证第1条）
 			user = userService.userDetail(SystemConstant.ADMIN_USER_ID);
 			if(user==null){
 				user = SystemConstant.ADMIN_USER;
@@ -295,9 +293,9 @@ public class AllOpenController extends BaseService {
 		for (int i = 0; i < originList.size(); i++) {
 			SidebarInfoResponse currentModule = originList.get(i);
 			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
-			//Long类型，封装类型一定要用equals或longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
+			//如果是Long类型这种封装类型一定要用equals或longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
-				currentModule.setList(setTreeList(originList, currentModule));
+				currentModule.setList(setTreeList(originList,currentModule));
 				moduleList.add(currentModule);
 			}
 		}
@@ -305,7 +303,7 @@ public class AllOpenController extends BaseService {
 	}
 	
 	/**
-	//封装成树形结构集合（非递归版）[代码没问题，但是写的不够好，复杂了]
+	//封装成树形结构集合（非递归版）[代码没问题，但是写的不好，复杂了]
     private List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
         for(int i=deepList.size()-1;i>0;i--){
