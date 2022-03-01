@@ -1,6 +1,6 @@
-import {Component,OnInit} from '@angular/core';
-import {SessionService} from '../../../service/SessionService';
-import {MenuItem} from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../../service/SessionService';
+import { MenuItem, PrimeIcons } from 'primeng/api';
 
 @Component({
   selector: 'app-web-home-sidebar',
