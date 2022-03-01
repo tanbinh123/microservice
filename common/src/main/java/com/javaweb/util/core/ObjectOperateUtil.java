@@ -71,7 +71,7 @@ public class ObjectOperateUtil {
 	}
 	
 	//对象映射转换
-	public static List<?> objectMapperConversion(List<?> sourceList,Class<?> target,Map<String,String> map,boolean needAllPropertiesToLowerCase) throws Exception {
+	public static List<?> objectMapperConversion(List<?> sourceList,Class<?> target,Map<String,String> map) throws Exception {
 		List<Object> targetList = new ArrayList<>();//目标映射列表
 		String sourceFiledName,sourceMethodName,targetFiledName,targetMethodName;
 		Method sourcetMethod,targetMethod;
