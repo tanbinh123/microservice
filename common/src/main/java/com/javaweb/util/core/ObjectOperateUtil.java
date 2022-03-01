@@ -71,7 +71,7 @@ public class ObjectOperateUtil {
 	}
 	
 	//对象映射转换
-	public static List<Object> objectMapperConversion(List<Object> sourceList,Class<?> target,Map<String,String> map) throws Exception {
+	public static List<?> objectMapperConversion(List<?> sourceList,Class<?> target,Map<String,String> map,boolean needAllPropertiesToLowerCase) throws Exception {
 		List<Object> targetList = new ArrayList<>();//目标映射列表
 		String sourceFiledName,sourceMethodName,targetFiledName,targetMethodName;
 		Method sourcetMethod,targetMethod;
@@ -86,9 +86,9 @@ public class ObjectOperateUtil {
 					continue;
 				}
 				//得到源对象对应的get方法名称
-				sourceMethodName = METHOD_GET+StringUtil.camelCaseConvert(sourceFiledName,CamelCaseEnum.FIRST_WORD_UPPER)/*sourceFiledName.substring(0,1).toUpperCase()+sourceFiledName.substring(1,sourceFiledName.length())*/;
+				sourceMethodName = METHOD_GET+StringUtil.camelCaseConvert(sourceFiledName,CamelCaseEnum.FIRST_WORD_UPPER);
 				//拼接获得目标对象的set方法名称
-				targetMethodName = METHOD_SET+StringUtil.camelCaseConvert(targetFiledName,CamelCaseEnum.FIRST_WORD_UPPER)/*targetFiledName.substring(0,1).toUpperCase()+targetFiledName.substring(1,targetFiledName.length())*/;
+				targetMethodName = METHOD_SET+StringUtil.camelCaseConvert(targetFiledName,CamelCaseEnum.FIRST_WORD_UPPER);
 				//得到源对象对应的get方法
 				sourcetMethod = sourceObject.getClass().getMethod(sourceMethodName,NULL_CLASS);
 				//得到目标对象对应的set方法
