@@ -1,6 +1,67 @@
 <div style="height:auto;vertical-align:middle;text-align:center;margin-top:5%;">
   <span style="font-weight:bold;"><a [routerLink]="['/web']"><h3>后台管理系统</h3></a></span>
 </div>
+<!-- 组件写法 -->
+<p-panelMenu [model]="items"></p-panelMenu>
+<!-- 原生做法 -->
+<!-- 1、父页面引用子页面的封装标签
 <div style="margin-top:5%;" *ngIf="menuListForTree!=null">
   <app-web-home-sidebar-recursion *ngFor="let i of menuListForTree" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></app-web-home-sidebar-recursion>
 </div>
+-->
+<!-- 2、新建子页面sidebar.recursion.html
+<div style="margin-top:5px;margin-left:5%;" *ngIf="list==null||list.length==0">
+  <i class="{{(icon==null||icon=='')?'icon':icon}}"></i>
+  <a [routerLink]="[url]" href="javascript:void(0);">{{name}}</a>
+</div>
+<div style="margin-top:5px;" *ngIf="list!=null&&list.length>0">
+  <div style="margin-left:5%;">
+    <i class="{{(icon==null||icon=='')?'icon':icon}}"></i>
+    <a (click)="addExpandClass()" href="javascript:void(0);">{{name}}</a>
+    <span [hidden]="!showMenu" style="float:right;margin-right:20px;"><i class="bi bi-arrows-collapse"></i></span>
+    <span [hidden]="showMenu" style="float:right;margin-right:20px;"><i class="bi bi-arrows-expand"></i></span>
+  </div>
+  <div style="margin-left:5%;" [hidden]="showMenu">
+    <app-web-home-sidebar-recursion *ngFor="let i of list" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></app-web-home-sidebar-recursion>
+  </div>
+</div>
+-->
+<!-- 3、新建子页面样式sidebar.recursion.scss
+a{
+  margin-left: 2%;
+  color: rgb(110, 109, 107);
+  font-weight: bold;
+}
+-->
+<!-- 4、新建子页面组件sidebar.recursion.component.ts
+import {Component, Input, OnInit} from '@angular/core';
+@Component({
+  selector: 'app-web-home-sidebar-recursion',
+  templateUrl: './sidebar.recursion.html',
+  styleUrls: ['./sidebar.recursion.scss']
+})
+export class SidebarRecursionComponent implements OnInit {
+  constructor(){
+  }
+  @Input() icon:string;
+  @Input() url:string;
+  @Input() name:string;
+  @Input() list:any[];
+  @Input() showMenu = true;
+  addExpandClass():void {
+    if (this.showMenu) {
+      this.showMenu = false;
+    } else {
+      this.showMenu = true;
+    }
+  }
+  //初始化
+  ngOnInit(): void {
+  }
+}
+-->
+<!-- 5、sidebar.module.ts引入子组件
+@NgModule({
+  declarations:[SidebarRecursionComponent]
+})
+-->
