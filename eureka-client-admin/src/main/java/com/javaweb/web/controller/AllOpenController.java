@@ -207,7 +207,7 @@ public class AllOpenController extends BaseService {
 		List<Module> modules = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).sorted(Comparator.comparing(Module::getOrders)).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
 		List<SidebarInfoResponse> menuListForTree = new ArrayList<>();
 		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
-		menuListForTree = setTreeList(menuListForTree,null);//setTreeList(menuListForTree);
+		//menuListForTree = setTreeList(menuListForTree,null);//setTreeList(menuListForTree);
 		tokenData.setMenuListForTree(menuListForTree);
 		if(!(SystemConstant.ADMIN_USER_ID.equals(user.getUserId()))){//非管理员时的数据权限处理
 			List<ExcludeInfoResponse> excludeInfoResponseList = interfacesService.getExcludeInfoResponseList(user.getUserId());
@@ -287,10 +287,11 @@ public class AllOpenController extends BaseService {
 		tokenData.setRsaPrivateKey2(rsaKey.getRsaStringPrivateKey());
 	}
 	
+	/**
 	//封装成树形结构集合（递归版）
 	private List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
 		List<SidebarInfoResponse> moduleList = new ArrayList<>();
-		for (int i = 0; i < originList.size(); i++) {
+		for (int i=0;i<originList.size();i++) {
 			SidebarInfoResponse currentModule = originList.get(i);
 			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
 			//如果是Long类型这种封装类型一定要用equals或longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
@@ -302,7 +303,6 @@ public class AllOpenController extends BaseService {
 		return moduleList;
 	}
 	
-	/**
 	//封装成树形结构集合（非递归版）[代码没问题，但是写的不好，复杂了]
     private List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
