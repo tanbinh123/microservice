@@ -286,7 +286,7 @@ public class StringUtil{
 	
 	//驼峰转化
 	public static String camelCaseConvert(String str,CamelCaseEnum camelCaseEnum){
-		str = handleNullString(str).toLowerCase();//全部转成小写
+		str = handleNullString(str)/*.toLowerCase()*/;//全部转成小写
 		str.replaceAll(CommonConstant.BAR,CommonConstant.UNDERLINE);//将-替换为_
 		String strs[] = str.split(CommonConstant.UNDERLINE);//分割_
 		StringBuilder stringBuilder = new StringBuilder();
