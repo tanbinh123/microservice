@@ -17,14 +17,14 @@ import java.util.TimeZone;
 import com.javaweb.util.entity.DateTimeInfo;
 
 /**
- * LocalDate         LocalTime         ZoneId
- * LocalDateTime..............
- * ZonedDateTime.............................
- * 日期时间加减的链式处理：LocalDate localDate = LocalDate.of(2017,3,24).with(ChronoField.YEAR,2020).plusYears(3).minusDays(2);//2023-03-22
- * 设置时间用with方法即可，但是用完要替换原值，如：
- * LocalDateTime localDateTime = LocalDateTime.now();
- * localDateTime = localDateTime.with(ChronoField.YEAR,2020);
- */
+LocalDate         LocalTime         ZoneId
+LocalDateTime..............
+ZonedDateTime.............................
+日期时间加减的链式处理：LocalDate localDate = LocalDate.of(2017,3,24).with(ChronoField.YEAR,2020).plusYears(3).minusDays(2);//2023-03-22
+设置时间用with方法即可，但是用完要替换原值，如：
+LocalDateTime localDateTime = LocalDateTime.now();
+localDateTime = localDateTime.with(ChronoField.YEAR,2020);
+*/
 /** 时分间隔
 Duration duration = getDuration(LocalDateTime.parse("2021-02-03 09:00:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),LocalDateTime.parse("2021-02-03 17:30:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 System.out.println(duration.toMinutes()/33);//15
@@ -253,17 +253,17 @@ public class DateUtil {
 		return localDateTime.plusSeconds(second).format(DateTimeFormatter.ofPattern(pattern));
 	}
 	
-	//获取两个时间（年月日）间的间隔
+	//获取两个时间（年月日）间的间隔（总是比较后者与前者的差）
 	public static Period getPeriod(LocalDate startDate,LocalDate endDate){
 		return Period.between(startDate,endDate);
 	}
 	
-	//获取两个时间（时分秒）间的间隔
+	//获取两个时间（时分秒）间的间隔（总是比较后者与前者的差）
 	public static Duration getDuration(LocalTime startDate,LocalTime endDate){
 		return Duration.between(startDate,endDate);
 	}
 	
-	//获取两个时间（年月日时分秒）间的间隔
+	//获取两个时间（年月日时分秒）间的间隔（总是比较后者与前者的差）
 	public static Duration getDuration(LocalDateTime startDate,LocalDateTime endDate){
 		return Duration.between(startDate,endDate);
 	}
