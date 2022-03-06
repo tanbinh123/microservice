@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../service/SessionService';
-import { MenuItem, PrimeIcons } from 'primeng/api';
+import { MenuItem/*, PrimeIcons*/ } from 'primeng/api';
 
 @Component({
   selector: 'app-web-home-sidebar',
@@ -21,7 +21,6 @@ export class SidebarComponent implements OnInit {
     let menuListForTree:any = tokenData.menuListForTree;
     //console.log(menuListForTree);
     this.items = this.setTreeList(menuListForTree,null);//组件写法
-    console.log(this.items);
     //this.menuListForTree = tokenData.menuListForTree;//原生写法
   }
 
@@ -30,7 +29,7 @@ export class SidebarComponent implements OnInit {
     let menuList:Array<any> = [];
     for(let i=0;i<menuListForTree.length;i++) {
       let currentEach = menuListForTree[i];
-      let changeEach = {'label':currentEach.moduleName,'icon':currentEach.icon,'routerLink':currentEach.pageUrl};
+      let changeEach = {"label":currentEach.moduleName,"icon":currentEach.icon,"routerLink":currentEach.pageUrl};
       if((eachMenu!=null&&eachMenu.moduleId==currentEach.parentId)||(eachMenu==null&&currentEach.parentId==null)) {
         changeEach['items'] = this.setTreeList(menuListForTree,currentEach);
         menuList.push(changeEach);

@@ -53,7 +53,7 @@ export class RoleListComponent implements OnInit {
   }
 
   //搜索按钮
-  public roleSearch(currentPage):void{
+  public search(currentPage):void{
     this.resultPage = new ResultPage();//对每次搜索初始化分页
     this.roleListRequest.currentPage = currentPage;
     this.roleListFunction(this.roleListRequest);
@@ -95,7 +95,7 @@ export class RoleListComponent implements OnInit {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            this.roleSearch(1);
+            this.search(1);
             alert('角色删除成功');
           }else{
             alert('角色删除失败');

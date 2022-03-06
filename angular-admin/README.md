@@ -5,7 +5,7 @@
 dependencies的较小基础依赖为：@angular/animations、@angular/common、@angular/compiler、@angular/core、@angular/forms、@angular/platform-browser、@angular/platform-browser-dynamic、@angular/router、rxjs    
 devDependencies的较小基础依赖为：@angular-devkit/build-angular、@angular/cli、@angular/compiler-cli、@types/jasmine、@types/jasminewd2、@types/node、jasmine-core、jasmine-spec-reporter、karma、karma-chrome-launcher、karma-coverage-istanbul-reporter、karma-jasmine、karma-jasmine-html-reporter、typescript、codelyzer    
 3、http响应未做全局拦截处理，有需要请自行优化    
-4、UI正在用PrimeNG改造中    
+4、UI目前Bootstrap和PrimeNG结合使用中，未来考虑全部使用PrimeNG    
 # 二、运行和打包          
 1、建议删除原来的node_modules（如果有）    
 2、安装：npm install    
