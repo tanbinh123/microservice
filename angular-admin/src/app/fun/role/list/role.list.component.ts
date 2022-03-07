@@ -1,13 +1,12 @@
-import {Component,OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {HttpService} from '../../../service/HttpService';
-import {AuthService} from '../../../service/AuthService';
-import {SessionService} from '../../../service/SessionService';
-import {ApiConstant} from '../../../constant/ApiConstant';
-import {ResultPage} from '../../../model/ResultPage';
-import {RoleListRequest} from '../../../model/role/RoleListRequest';
-
+import { HttpService } from '../../../service/HttpService';
+import { AuthService } from '../../../service/AuthService';
+import { SessionService } from '../../../service/SessionService';
+import { ApiConstant } from '../../../constant/ApiConstant';
+import { ResultPage } from '../../../model/ResultPage';
+import { RoleListRequest } from '../../../model/role/RoleListRequest';
 
 @Component({
   selector: 'app-web-role-list',
