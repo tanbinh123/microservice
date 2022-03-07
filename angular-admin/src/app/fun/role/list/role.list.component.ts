@@ -89,21 +89,23 @@ export class RoleListComponent implements OnInit {
 
   //删除角色
   public roleDeleteFunction(roleId:string):void {
-    this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE,null,new Map([['roleId',roleId]])).subscribe(
-      {
-        next:(result:any) => {
-          //console.log(result);
-          if(result.code==200){
-            this.search(1);
-            alert('角色删除成功');
-          }else{
-            alert('角色删除失败');
-          }
-        },
-        error:e => {},
-        complete:() => {}
-      }
-    );
+    if(window.confirm('确定要删除吗？')) {
+      this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE,null,new Map([['roleId',roleId]])).subscribe(
+        {
+          next:(result:any) => {
+            //console.log(result);
+            if(result.code==200){
+              this.search(1);
+              alert('角色删除成功');
+            }else{
+              alert('角色删除失败');
+            }
+          },
+          error:e => {},
+          complete:() => {}
+        }
+      );
+    }
   }
 
   //角色详情
