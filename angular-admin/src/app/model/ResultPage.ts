@@ -1,4 +1,4 @@
-import {CommonConstant} from '../constant/CommonConstant';
+import { CommonConstant } from '../constant/CommonConstant';
 
 export class ResultPage {
 
@@ -30,7 +30,7 @@ export class ResultPage {
 
   totalSize:number;//总条数
 
-  pageList:number;//分页页数
+  pageList:Array<Number>;//分页页数
 
   dataLoading = CommonConstant.EMPTY;
 
