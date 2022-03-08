@@ -1,16 +1,18 @@
-<div>
-  <div class="form-group">
-    <label>角色名称</label>
-    <input type="text" class="form-control" [(ngModel)]="roleModifyRequest.roleName">
+<div class="p-grid p-fluid">
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">角色名称</span>
+      <input type="text" pInputText [(ngModel)]="roleModifyRequest.roleName">
+      <span class="p-inputgroup-addon">角色代码</span>
+      <input type="text" pInputText [(ngModel)]="roleModifyRequest.roleCode">
+      <span class="p-inputgroup-addon">备注</span>
+      <input type="text" pInputText [(ngModel)]="roleModifyRequest.remark">
+    </div>
   </div>
-  <div class="form-group">
-    <label>角色代码</label>
-    <input type="text" class="form-control" [(ngModel)]="roleModifyRequest.roleCode">
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <button pButton type="button" class="p-button p-button-sm" (click)="roleModify()">提交</button>
+      <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="roleModifyBack()">返回</button>
+    </div>
   </div>
-  <div class="form-group">
-    <label>备注</label>
-    <input type="text" class="form-control" [(ngModel)]="roleModifyRequest.remark">
-  </div>
-  <button type="button" (click)="roleModify()" class="btn btn-primary">提交</button>
-  <button type="button" (click)="roleModifyBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
 </div>
