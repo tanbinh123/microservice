@@ -45,7 +45,6 @@ public class StringUtil{
                    break;
                }
            }
-          
        }
        return str.substring(start,end);
 	}
