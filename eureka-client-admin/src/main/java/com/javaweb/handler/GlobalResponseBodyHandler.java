@@ -42,7 +42,7 @@ public class GlobalResponseBodyHandler implements ResponseBodyAdvice<BaseRespons
 							for(int i=0;i<excludeInfoResponseList.size();i++){
 								ExcludeInfoResponse excludeInfoResponse = excludeInfoResponseList.get(i);
 								if(interfaces.getUrl().equals(excludeInfoResponse.getUrl())){
-									String out = ObjectOperateUtil.excludeField(baseResponseResult,excludeInfoResponse.getExcludeField().split(CommonConstant.COMMA),false);
+									String out = ObjectOperateUtil.excludeField(baseResponseResult,excludeInfoResponse.getExcludeField().split(CommonConstant.COMMA),false).toString();
 									baseResponseResult = new ObjectMapper().readValue(out,BaseResponseResult.class);
 									break;
 								}
