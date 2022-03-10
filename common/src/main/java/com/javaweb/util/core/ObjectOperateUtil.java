@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.BeanUtils;
 
 import com.javaweb.enums.CamelCaseEnum;
 
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -129,9 +131,11 @@ public class ObjectOperateUtil {
 	//{"code":200,"data":[{"address":"x1","age":18},{"address":"x2","age":19},{"address":"x3","age":20}],"message":"success"}
 	System.out.println(excludeField(b,new String[]{"userName"},false));
 	*/
-	public static String excludeField(Object obj,String[] excludes,boolean isArray){
+	public static JSON excludeField(Object obj,String[] excludes,boolean isArray){
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.setExcludes(excludes);
+		if(excludes!=null&&excludes.length>0){
+			jsonConfig.setExcludes(Stream.of(excludes).distinct().toArray(String[]::new));
+		}
 		jsonConfig.registerJsonValueProcessor(Date.class,new JsonValueProcessor() {
 			@Override
 			public Object processObjectValue(String arg0,Object arg1,JsonConfig arg2) {
@@ -143,11 +147,49 @@ public class ObjectOperateUtil {
 			}
 		});
 		if(isArray){
-			return JSONArray.fromObject(obj,jsonConfig).toString();
+			return JSONArray.fromObject(obj,jsonConfig);
 		}else{
-			return JSONObject.fromObject(obj,jsonConfig).toString();
+			return JSONObject.fromObject(obj,jsonConfig);
 		}
 	}
+	
+	/**
+	@Target(ElementType.FIELD)
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface DistributedTimedTask {
+		String[] value();
+	}
+	
+    public static <T> String[] excludesImpl(T t) {
+    	List<String> list = new ArrayList<>();
+    	try{
+    		Class<?> c = t.getClass();
+    		Field[] fields = c.getDeclaredFields();
+    		for(int i=0;i<fields.length;i++){
+    			Field field = fields[i];
+    			field.setAccessible(true);
+    			if(!"serialVersionUID".equals(field.getName())){
+    				ExcludeResponseField erf = field.getAnnotation(ExcludeResponseField.class);
+    				if(erf!=null){
+    					Method method = c.getDeclaredMethod("get"+StringUtil.camelCaseConvert(field.getName(),CamelCaseEnum.FIRST_WORD_UPPER),new Class[]{});
+    					Integer obj = (Integer)method.invoke(t,new Object[]{});
+    					if(1==obj){
+    						list.addAll(Arrays.asList(erf.value()));
+    					}
+    				}
+    			}
+    		}
+    		list = list.stream().distinct().collect(Collectors.toList());
+    	}catch(Exception e){
+    		//do nothing
+    	}
+    	return list.toArray(new String[]{});
+    }
+    
+	//请求入参实体类加注解：@ExcludeResponseField("name")，name对应返回出参实体类
+	
+	//调用：JSON out = StringUtil.excludeField(列表<返回出参实体类>,StringUtil.excludesImpl(请求入参实体类),true);
+    */
 	
 	//json字符串数组转Byte数组
 	public static Byte[] jsonArrayString2ByteArray(String jsonArray){
