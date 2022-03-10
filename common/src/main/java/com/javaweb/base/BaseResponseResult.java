@@ -57,7 +57,7 @@ public class BaseResponseResult implements Serializable {
 			if(data instanceof List||data instanceof String[]){
 				arrayFlag = true; 
 			}
-			String out = ObjectOperateUtil.excludeField(data,array,arrayFlag);
+			String out = ObjectOperateUtil.excludeField(data,array,arrayFlag).toString();
 			try {
 				/** 数组的处理
 				Test[] array = new ObjectMapper().readValue(str,Test[].class);
