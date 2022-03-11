@@ -1,18 +1,18 @@
-import {Component,OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component,OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {HttpService} from '../../../service/HttpService';
-import {AuthService} from '../../../service/AuthService';
-import {SessionService} from '../../../service/SessionService';
-import {ApiConstant} from '../../../constant/ApiConstant';
-import {UserModifyRequest} from '../../../model/user/UserModifyRequest';
-import {RoleModifyRequest} from '../../../model/role/RoleModifyRequest';
+import { HttpService } from '../../../service/HttpService';
+import { AuthService } from '../../../service/AuthService';
+import { SessionService } from '../../../service/SessionService';
+import { ApiConstant } from '../../../constant/ApiConstant';
+import { RoleModifyRequest } from '../../../model/role/RoleModifyRequest';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-web-role-modify',
   templateUrl: './role.modify.html',
   styleUrls: ['./role.modify.scss'],
-  providers:[]
+  providers:[MessageService]
 })
 
 export class RoleModifyComponent implements OnInit {
@@ -21,7 +21,8 @@ export class RoleModifyComponent implements OnInit {
               public activatedRoute:ActivatedRoute,
               public httpService:HttpService,
               public authService:AuthService,
-              public sessionService:SessionService){
+              public sessionService:SessionService,
+              public messageService:MessageService){
 
   }
 
@@ -57,20 +58,28 @@ export class RoleModifyComponent implements OnInit {
   }
 
   //修改角色
+  modifyFlag:boolean = false;
   public roleModify():void{
+    this.modifyFlag = true;
     this.httpService.requestJsonData(ApiConstant.SYS_ROLE_MODIFY,JSON.stringify(this.roleModifyRequest)).subscribe(
       {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            alert('修改角色成功');
-            this.router.navigate(['../'],{relativeTo:this.activatedRoute});
+            this.messageService.add({severity:'info',summary:'修改',detail:'角色修改成功'});
+            setTimeout(()=>{
+              this.messageService.clear();
+              this.router.navigate(['../'],{relativeTo:this.activatedRoute});
+            },1000);
           }else{
-            alert(result.message);
-            //this.router.navigate(['webLogin']);
+            this.messageService.add({severity:'error',summary:'错误',detail:'角色修改失败'});
+            setTimeout(()=>{this.messageService.clear()},1000);
+            this.modifyFlag = false;
           }
         },
-        error:e => {},
+        error:e => {
+          this.modifyFlag = false;
+        },
         complete:() => {}
       }
     );
