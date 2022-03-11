@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* NgZorro全局样式 */
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
+
+/* NgZorro自定义button样式 */
 .ant-btn-warning{
   color: rgba(0, 0, 0, 0.65);
   background-color: #f5e106;
@@ -8,6 +12,7 @@
 .ant-btn-warning:hover{
   background-color: #f3e032;
 }
+
 .ant-btn-main{
   color: rgba(0, 0, 0, 0.65);
   background-color: #3151ef;
@@ -16,6 +21,7 @@
 .ant-btn-main:hover{
   background-color: #607aef;
 }
+
 .ant-btn-info{
   color: rgba(0, 0, 0, 0.65);
   background-color: #06aaf6;
@@ -24,6 +30,7 @@
 .ant-btn-info:hover{
   background-color: #45bbf5;
 }
+
 .ant-btn-success{
   color: rgba(0, 0, 0, 0.65);
   background-color: #7df307;
@@ -32,6 +39,7 @@
 .ant-btn-success:hover{
   background-color: #9df349;
 }
+
 .ant-btn-error{
   color: rgba(0, 0, 0, 0.65);
   background-color: #f81707;

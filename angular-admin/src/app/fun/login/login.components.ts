@@ -6,11 +6,10 @@ import { UserLoginRequest } from 'src/app/model/user/UserLoginRequest';
 import { HttpService } from 'src/app/service/HttpService';
 import { ApiConstant } from 'src/app/constant/ApiConstant';
 import { SessionService } from 'src/app/service/SessionService';
-import { RequestHeader } from 'src/app/model/common/RequestHeader';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
-import { CommonConstant } from "../../constant/CommonConstant";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ValidatorUtil} from "../../util/ValidatorUtil";
+import { CommonConstant } from '../../constant/CommonConstant';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgZorroValidatorUtil } from '../../util/NgZorroValidatorUtil';
 
 @Component({
   selector: 'app-web-login',
