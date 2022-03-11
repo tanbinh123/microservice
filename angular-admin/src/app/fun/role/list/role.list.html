@@ -1,5 +1,6 @@
 <p-table [value]="resultPage.data" responsiveLayout="scroll">
   <ng-template pTemplate="caption">
+    <div style="z-index:1000;position:absolute;margin-left:80%;"><p-messages></p-messages></div>
     <input type="text" placeholder="请输入角色名称" pInputText class="p-inputtext-sm" [(ngModel)]="roleListRequest.roleName"/>
     <button pButton type="button" class="buttonLeft p-button p-button-sm" (click)="search(1)" *ngIf="roleListZone">查询</button>
     <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="reset()" *ngIf="roleListZone">重置</button>
@@ -21,6 +22,7 @@
       <td>{{eachData.roleCode}}</td>
       <td>{{eachData.createDate}}</td>
       <td>
+        <p-confirmDialog key="deleteRoleButtonDialog_{{eachData.roleId}}" acceptLabel="是" rejectLabel="否"></p-confirmDialog>
         <button pButton type="button" class="p-button-danger p-button-sm" (click)="roleDeleteFunction(eachData.roleId)" *ngIf="roleDeleteZone">删除角色</button>
         <button pButton type="button" class="buttonLeft p-button-warning p-button-sm" (click)="roleModifyFunction(eachData.roleId)" *ngIf="roleModifyZone">修改角色</button>
         <button pButton type="button" class="buttonLeft p-button p-button-sm" (click)="roleDetailFunction(eachData.roleId)" *ngIf="roleDetailZone">角色详情</button>
