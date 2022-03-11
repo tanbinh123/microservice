@@ -7,9 +7,11 @@ import { RoleListComponent } from './role.list.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { MessagesModule } from "primeng/messages";
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, TableModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, RouterModule, FormsModule, TableModule, InputTextModule, ButtonModule, ConfirmDialogModule, MessagesModule],
   declarations:[RoleListComponent],
   exports:[RoleListComponent]
 })
