@@ -7,9 +7,10 @@ import { RoleAddComponent } from './role.add.component';
 import { TableModule } from "primeng/table";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
+import { MessagesModule } from "primeng/messages";
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, TableModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, RouterModule, FormsModule, TableModule, InputTextModule, ButtonModule, MessagesModule],
   declarations:[RoleAddComponent],
   exports:[RoleAddComponent]
 })

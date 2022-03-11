@@ -1,4 +1,5 @@
 <div class="p-grid p-fluid">
+  <div style="z-index:1000;position:absolute;margin-left:80%;"><p-messages></p-messages></div>
   <div class="p-col-12 p-md-4">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">角色名称</span>
@@ -11,7 +12,7 @@
   </div>
   <div class="p-col-12 p-md-4">
     <div class="p-inputgroup">
-      <button pButton type="button" class="p-button p-button-sm" (click)="roleAdd()">提交</button>
+      <button pButton type="button" class="p-button p-button-sm" [disabled]="addFlag" (click)="roleAdd()">提交</button>
       <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="roleAddBack()">返回</button>
     </div>
   </div>

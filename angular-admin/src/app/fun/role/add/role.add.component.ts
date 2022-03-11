@@ -1,18 +1,18 @@
-import {Component,OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Component,OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {HttpService} from '../../../service/HttpService';
-import {AuthService} from '../../../service/AuthService';
-import {SessionService} from '../../../service/SessionService';
-import {UserAddRequest} from '../../../model/user/UserAddRequest';
-import {ApiConstant} from '../../../constant/ApiConstant';
-import {RoleAddRequest} from '../../../model/role/RoleAddRequest';
+import { HttpService } from '../../../service/HttpService';
+import { AuthService } from '../../../service/AuthService';
+import { SessionService } from '../../../service/SessionService';
+import { ApiConstant } from '../../../constant/ApiConstant';
+import { RoleAddRequest } from '../../../model/role/RoleAddRequest';
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-web-role-add',
   templateUrl: './role.add.html',
   styleUrls: ['./role.add.scss'],
-  providers:[]
+  providers:[MessageService]
 })
 
 export class RoleAddComponent implements OnInit {
@@ -21,7 +21,8 @@ export class RoleAddComponent implements OnInit {
               public activatedRoute:ActivatedRoute,
               public httpService:HttpService,
               public authService:AuthService,
-              public sessionService:SessionService){
+              public sessionService:SessionService,
+              public messageService:MessageService){
 
   }
 
@@ -33,20 +34,28 @@ export class RoleAddComponent implements OnInit {
   }
 
   //新增角色
+  addFlag:boolean = false;
   public roleAdd():void{
+    this.addFlag = true;
     this.httpService.requestJsonData(ApiConstant.SYS_ROLE_ADD,JSON.stringify(this.roleAddRequest)).subscribe(
       {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            alert('新增角色成功');
-            this.router.navigate(['../'],{relativeTo:this.activatedRoute});
+            this.messageService.add({severity:'info',summary:'新增',detail:'角色新增成功'});
+            setTimeout(()=>{
+              this.messageService.clear();
+              this.router.navigate(['../'],{relativeTo:this.activatedRoute});
+            },1000);
           }else{
-            alert(result.message);
-            //this.router.navigate(['webLogin']);
+            this.messageService.add({severity:'error',summary:'错误',detail:'角色新增失败'});
+            setTimeout(()=>{this.messageService.clear()},1000);
+            this.addFlag = false;
           }
         },
-        error:e => {},
+        error:e => {
+          this.addFlag = false;
+        },
         complete:() => {}
       }
     );
