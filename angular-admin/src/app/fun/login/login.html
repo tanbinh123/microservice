@@ -1,28 +1,29 @@
 <div class="loginImage">
   <div class="login">
-    <div style="color: red">{{errorMessage}}</div>
-    <div class="grid p-fluid">
-      <div class="col-12 md:col-4">
-        <h4>后台管理系统{{version}}</h4>
-      </div>
-      <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">账号</span>
-          <input type="text" pInputText placeholder="请输入账号" [(ngModel)]="userLoginRequest.username" maxlength="20" appLoginKeyDown/>
-        </div>
-        <div class="p-inputgroup" style="margin-top: 1px">
-          <span class="p-inputgroup-addon">密码</span>
-          <input type="password" pInputText placeholder="请输入密码" [(ngModel)]="userLoginRequest.password" maxlength="20" (keydown.enter)="keydownEnter($event)"/>
-        </div>
-      </div>
-    </div>
-    <div class="grid p-fluid">
-      <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-          <button pButton pRipple type="button" label="Angular示例" class="p-button-info" (click)="demo()"></button>
-          <button pButton pRipple type="button" label="登录" class="p-button-info" (click)="login()" style="margin-left: 3px"></button>
-        </div>
-      </div>
-    </div>
+    <h4>后台管理系统{{version}}</h4>
+    <form nz-form class="login-form" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" formControlName="username" nz-input placeholder="请输入账号" [(ngModel)]="userLoginRequest.username" maxlength="20" appLoginKeyDown />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" formControlName="password" nz-input placeholder="请输入密码" [(ngModel)]="userLoginRequest.password" maxlength="20" (keydown.enter)="keydownEnter($event)"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" class="ant-btn-info" (click)="demo()">Angular示例</button>
+          <button nz-button nzType="primary" class="ant-btn-info" (click)="login()">登录</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </div>
 </div>
+
+

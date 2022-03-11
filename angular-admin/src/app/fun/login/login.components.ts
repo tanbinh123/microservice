@@ -8,8 +8,9 @@ import { ApiConstant } from 'src/app/constant/ApiConstant';
 import { SessionService } from 'src/app/service/SessionService';
 import { RequestHeader } from 'src/app/model/common/RequestHeader';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
-import {PrimeNGConfig} from "primeng/api";
-import {CommonConstant} from "../../constant/CommonConstant";
+import { CommonConstant } from "../../constant/CommonConstant";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {ValidatorUtil} from "../../util/ValidatorUtil";
 
 @Component({
   selector: 'app-web-login',
@@ -19,6 +20,7 @@ import {CommonConstant} from "../../constant/CommonConstant";
 
 export class LoginComponent implements OnInit {
 
+  validateForm!:FormGroup;
   errorMessage:string = CommonConstant.EMPTY;
   version:string = ApiConstant.API_VERSION;
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
@@ -27,12 +29,16 @@ export class LoginComponent implements OnInit {
               public sessionService:SessionService,
               public router:Router,
               public datePipe:DatePipe,
-              private primengConfig:PrimeNGConfig) {
+              public formBuilder:FormBuilder) {
 
   }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
+    this.validateForm = this.formBuilder.group({
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      remember: [true]
+    });
   }
 
   //回车事件
@@ -43,6 +49,17 @@ export class LoginComponent implements OnInit {
 
   //用户登录
   public login():void {
+    if (this.validateForm.valid) {
+      console.log('submit', this.validateForm.value);
+    } else {
+      Object.values(this.validateForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+    /**
     let newUserLoginRequest:UserLoginRequest = new UserLoginRequest();
     let time = this.datePipe.transform(new Date(),'yyyyMMddHHmmss');
     newUserLoginRequest.username = this.userLoginRequest.username;
@@ -91,6 +108,7 @@ export class LoginComponent implements OnInit {
         complete:() => {}
       }
     );
+    */
   }
 
   //示例
