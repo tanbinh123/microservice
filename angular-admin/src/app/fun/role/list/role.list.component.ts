@@ -7,12 +7,13 @@ import { SessionService } from '../../../service/SessionService';
 import { ApiConstant } from '../../../constant/ApiConstant';
 import { ResultPage } from '../../../model/ResultPage';
 import { RoleListRequest } from '../../../model/role/RoleListRequest';
+import { ConfirmationService, ConfirmEventType, Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-web-role-list',
   templateUrl: './role.list.html',
   styleUrls: ['./role.list.scss'],
-  providers:[]
+  providers:[ConfirmationService,MessageService]
 })
 
 export class RoleListComponent implements OnInit {
@@ -21,7 +22,9 @@ export class RoleListComponent implements OnInit {
               public activatedRoute:ActivatedRoute,
               public httpService:HttpService,
               public authService:AuthService,
-              public sessionService:SessionService){
+              public sessionService:SessionService,
+              public confirmationService:ConfirmationService,
+              public messageService:MessageService){
     this.roleListZone = authService.canShow(ApiConstant.SYS_ROLE_LIST);
     this.roleDeleteZone = authService.canShow(ApiConstant.SYS_ROLE_DELETE);
     this.roleAddZone = authService.canShow(ApiConstant.SYS_ROLE_ADD);
@@ -89,23 +92,36 @@ export class RoleListComponent implements OnInit {
 
   //删除角色
   public roleDeleteFunction(roleId:string):void {
-    if(window.confirm('确定要删除吗？')) {
-      this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE,null,new Map([['roleId',roleId]])).subscribe(
-        {
-          next:(result:any) => {
-            //console.log(result);
-            if(result.code==200){
-              this.search(1);
-              alert('角色删除成功');
-            }else{
-              alert('角色删除失败');
-            }
-          },
-          error:e => {},
-          complete:() => {}
-        }
-      );
-    }
+    this.confirmationService.confirm({
+      message: '您确定要删除该条记录吗？',
+      header: '删除确认',
+      icon: 'pi pi-exclamation-triangle',
+      key: 'deleteRoleButtonDialog_'+roleId,
+      accept: () => {
+        this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE,null,new Map([['roleId',roleId]])).subscribe(
+          {
+            next:(result:any) => {
+              //console.log(result);
+              if(result.code==200){
+                this.search(1);
+                this.messageService.add({severity:'info',summary:'确定',detail:'角色删除成功'});
+                setTimeout(()=>{this.messageService.clear()},1000);
+              }else{
+                this.messageService.add({severity:'error',summary:'错误',detail:'角色删除失败'});
+                setTimeout(()=>{this.messageService.clear()},1000);
+              }
+            },
+            error:e => {},
+            complete:() => {}
+          }
+        );
+      },
+      reject: (type) => {
+        //case ConfirmEventType.REJECT,case ConfirmEventType.CANCEL
+        this.messageService.add({severity:'warn',summary:'取消',detail:'取消删除'});
+        setTimeout(()=>{this.messageService.clear()},1000);
+      }
+    });
   }
 
   //角色详情
