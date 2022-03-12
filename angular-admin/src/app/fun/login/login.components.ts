@@ -8,8 +8,9 @@ import { ApiConstant } from 'src/app/constant/ApiConstant';
 import { SessionService } from 'src/app/service/SessionService';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
 import { CommonConstant } from '../../constant/CommonConstant';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgZorroValidatorUtil } from '../../util/NgZorroValidatorUtil';
+import { RequestHeader } from '../../model/common/RequestHeader';
 
 @Component({
   selector: 'app-web-login',
@@ -20,7 +21,6 @@ import { NgZorroValidatorUtil } from '../../util/NgZorroValidatorUtil';
 export class LoginComponent implements OnInit {
 
   validateForm!:FormGroup;
-  errorMessage:string = CommonConstant.EMPTY;
   version:string = ApiConstant.API_VERSION;
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
 
@@ -33,10 +33,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initValidateForm();
+  }
+
+  public initValidateForm():void {
     this.validateForm = this.formBuilder.group({
-      username: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      remember: [true]
+      username: [null, [NgZorroValidatorUtil.empty]],
+      password: [null, [NgZorroValidatorUtil.empty]]
     });
   }
 
@@ -49,7 +52,51 @@ export class LoginComponent implements OnInit {
   //用户登录
   public login():void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      //console.log(this.validateForm.value);
+      let newUserLoginRequest:UserLoginRequest = new UserLoginRequest();
+      let time = this.datePipe.transform(new Date(),'yyyyMMddHHmmss');
+      newUserLoginRequest.username = this.userLoginRequest.username;
+      newUserLoginRequest.password = this.encodePassword(this.userLoginRequest.password,time);
+      newUserLoginRequest.clientType = this.userLoginRequest.clientType;
+      newUserLoginRequest.loginWay = this.userLoginRequest.loginWay;
+      newUserLoginRequest.time = time;
+      this.httpService.requestJsonData(ApiConstant.WEB_LOGIN,JSON.stringify(newUserLoginRequest)).subscribe(
+        {
+          next:(result:any) => {
+            //console.log(result);
+            if(200==result.code){
+              let requestHeader:RequestHeader = this.sessionService.getHeadToken();
+              requestHeader.token = result.data;
+              this.httpService.requestJsonData(ApiConstant.GET_REDIS_TOKEN_DATA,null,null,requestHeader).subscribe({
+                next:(result:any) => {
+                  if(200==result.code){
+                    let ret = result.data;
+                    //console.log(ret);
+                    this.sessionService.setTokenData(JSON.stringify(ret));
+                    //更新ApiConstant->URL_MAP里的信息
+                    //console.log('更新前：',ApiConstant.URL_MAP);
+                    this.refreshUrlMap(ret.interfaceInfoResponseList);
+                    //console.log('更新后：',ApiConstant.URL_MAP);
+                    this.router.navigate(['web']);
+                  }else{
+                    alert(result.message);
+                  }
+                },
+                error:e => {
+                  alert(e);
+                },
+                complete:() => {}
+              });
+            }else{
+              alert(result.message);
+            }
+          },
+          error:e => {
+            alert(e.message)
+          },
+          complete:() => {}
+        }
+      );
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -58,56 +105,6 @@ export class LoginComponent implements OnInit {
         }
       });
     }
-    /**
-    let newUserLoginRequest:UserLoginRequest = new UserLoginRequest();
-    let time = this.datePipe.transform(new Date(),'yyyyMMddHHmmss');
-    newUserLoginRequest.username = this.userLoginRequest.username;
-    newUserLoginRequest.password = this.encodePassword(this.userLoginRequest.password,time);
-    newUserLoginRequest.clientType = this.userLoginRequest.clientType;
-    newUserLoginRequest.loginWay = this.userLoginRequest.loginWay;
-    newUserLoginRequest.time = time;
-    this.httpService.requestJsonData(ApiConstant.WEB_LOGIN,JSON.stringify(newUserLoginRequest)).subscribe(
-      {
-        next:(result:any) => {
-          //console.log(result);
-          if(200==result.code){
-            let requestHeader:RequestHeader = this.sessionService.getHeadToken();
-            requestHeader.token = result.data;
-            this.httpService.requestJsonData(ApiConstant.GET_REDIS_TOKEN_DATA,null,null,requestHeader).subscribe({
-              next:(result:any) => {
-                if(200==result.code){
-                  let ret = result.data;
-                  //console.log(ret);
-                  this.sessionService.setTokenData(JSON.stringify(ret));
-                  //更新ApiConstant->URL_MAP里的信息
-                  //console.log('更新前：',ApiConstant.URL_MAP);
-                  this.refreshUrlMap(ret.interfaceInfoResponseList);
-                  //console.log('更新后：',ApiConstant.URL_MAP);
-                  this.router.navigate(['web']);
-                }else{
-                  //alert(result.message);
-                  this.errorMessage = result.message;
-                }
-              },
-              error:e => {
-                //alert(e);
-                this.errorMessage = e.message;
-              },
-              complete:() => {}
-            });
-          }else{
-            //alert(result.message);
-            this.errorMessage = result.message;
-          }
-        },
-        error:e => {
-          //alert(e.message)
-          this.errorMessage = e.message;
-        },
-        complete:() => {}
-      }
-    );
-    */
   }
 
   //示例
