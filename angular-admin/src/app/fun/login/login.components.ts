@@ -7,10 +7,10 @@ import { HttpService } from 'src/app/service/HttpService';
 import { ApiConstant } from 'src/app/constant/ApiConstant';
 import { SessionService } from 'src/app/service/SessionService';
 import { RequestUrl } from 'src/app/model/common/RequestUrl';
-import { CommonConstant } from '../../constant/CommonConstant';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgZorroValidatorUtil } from '../../util/NgZorroValidatorUtil';
 import { RequestHeader } from '../../model/common/RequestHeader';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-web-login',
@@ -24,11 +24,9 @@ export class LoginComponent implements OnInit {
   version:string = ApiConstant.API_VERSION;
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
 
-  constructor(public httpService:HttpService,
-              public sessionService:SessionService,
-              public router:Router,
-              public datePipe:DatePipe,
-              public formBuilder:FormBuilder) {
+  constructor(public router:Router,
+              public httpService:HttpService,public sessionService:SessionService,public datePipe:DatePipe,
+              public formBuilder:FormBuilder,public nzMessageService:NzMessageService) {
 
   }
 
@@ -79,20 +77,20 @@ export class LoginComponent implements OnInit {
                     //console.log('更新后：',ApiConstant.URL_MAP);
                     this.router.navigate(['web']);
                   }else{
-                    alert(result.message);
+                    this.nzMessageService.error(result.message);
                   }
                 },
                 error:e => {
-                  alert(e);
+                  this.nzMessageService.error(e.message);
                 },
                 complete:() => {}
               });
             }else{
-              alert(result.message);
+              this.nzMessageService.error(result.message);
             }
           },
           error:e => {
-            alert(e.message)
+            this.nzMessageService.error(e.message)
           },
           complete:() => {}
         }

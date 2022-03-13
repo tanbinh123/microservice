@@ -8,11 +8,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, RouterModule, ReactiveFormsModule,
-    NzButtonModule, NzFormModule, NzInputModule, NzTypographyModule
+    NzButtonModule, NzFormModule, NzInputModule, NzTypographyModule, NzMessageModule
   ],
   declarations: [LoginComponent, LoginKeyDownDirective],
   exports: [LoginComponent]
