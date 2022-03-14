@@ -1,34 +1,11 @@
-.login {
-  /* text-align: center; */
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-flow: column;
-  justify-items: flex-start;
-  align-items: center;
-}
-.login h4 {
-  color: #000000;
-  font-weight: bold;
-}
-.loginImage {
-  background:url(../../../assets/image/login/login_bg.jpeg) no-repeat;
-  position:fixed;
-  top: 0;
-  left: 0;
+nz-layout {
   width: 100%;
   height: 100%;
-  z-index: 10;
-  zoom: 1;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
+  background-color: #c8f8f8;
 }
 .login-form {
-  max-width: 300px;
-}
-.login-form-margin {
-  margin-bottom: 16px;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%,-50%);
 }
