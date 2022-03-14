@@ -1,9 +1,5 @@
-<div style="text-align:center;">
-  <div style="float:right;margin-right:1%;">
-    <div>用户（<span style="color: red">{{userName}}</span>）<a (click)="logout()" href="javascript:void(0);">登出</a></div>
-  </div>
-  <div style="float:left;margin-left:1%;">
-    <div><span>服务器时间：{{serveTime}}</span></div>
-    <div><span>本地区时间：{{localTime}}</span></div>
-  </div>
+<div>
+  <span>服务器时间：{{serveTime}}</span>
+  <span>本地区时间：{{localTime}}</span>
+  <span>用户（<span style="color: red">{{userName}}</span>）<a (click)="logout()" href="javascript:void(0);">登出</a></span>
 </div>
