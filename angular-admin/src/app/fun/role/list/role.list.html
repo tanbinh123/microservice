@@ -1,12 +1,18 @@
-<p-table [value]="resultPage.data" responsiveLayout="scroll">
-  <ng-template pTemplate="caption">
-    <div style="z-index:1000;position:absolute;margin-left:80%;"><p-messages></p-messages></div>
-    <input type="text" placeholder="请输入角色名称" pInputText class="p-inputtext-sm" [(ngModel)]="roleListRequest.roleName"/>
-    <button pButton type="button" class="buttonLeft p-button p-button-sm" (click)="search(1)" *ngIf="roleListZone">查询</button>
-    <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="reset()" *ngIf="roleListZone">重置</button>
-    <button pButton type="button" class="buttonLeft p-button-success p-button-sm" (click)="roleAddFunction()" *ngIf="roleAddZone">新增</button>
-  </ng-template>
-  <ng-template pTemplate="header">
+<div class="searchZone">
+  <div nz-row [nzGutter]="4">
+    <div nz-col nzSpan="2">
+      <input type="text" nz-input placeholder="请输入角色名称" maxlength="20" [(ngModel)]="roleListRequest.roleName"/>
+    </div>
+    <div nz-col nzSpan="2">
+      <button nz-button nzType="primary" type="button" class="ant-btn-main" (click)="search(1)" *ngIf="roleListZone" [nzLoading]="loading">查询</button>
+      <button nz-button nzType="primary" type="button" class="ant-btn-info" (click)="reset()" *ngIf="roleListZone">重置</button>
+      <button nz-button nzType="primary" type="button" class="ant-btn-success" (click)="roleAddFunction()" *ngIf="roleAddZone">新增</button>
+    </div>
+  </div>
+</div>
+<nz-table #rowSelectionTable nzShowPagination [nzFrontPagination]="false" (nzPageIndexChange)="search($event)" [nzLoading]="loading" *ngIf="roleListZone"
+          [nzData]="resultPage.data" [nzTotal]="resultPage.totalSize" [nzPageIndex]="resultPage.currentPage" [nzPageSize]="resultPage.pageSize">
+  <thead>
     <tr>
       <th>序号</th>
       <th>角色名称</th>
@@ -14,33 +20,19 @@
       <th>注册日期</th>
       <th>操作</th>
     </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-eachData let-index="rowIndex">
-    <tr>
-      <td>{{(index+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
-      <td>{{eachData.roleName}}</td>
-      <td>{{eachData.roleCode}}</td>
-      <td>{{eachData.createDate}}</td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data;let xh=index">
+      <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+      <td>{{data.roleName}}</td>
+      <td>{{data.roleCode}}</td>
+      <td>{{data.createDate}}</td>
       <td>
-        <p-confirmDialog key="deleteRoleButtonDialog_{{eachData.roleId}}" acceptLabel="是" rejectLabel="否"></p-confirmDialog>
-        <button pButton type="button" class="p-button-danger p-button-sm" (click)="roleDeleteFunction(eachData.roleId)" *ngIf="roleDeleteZone">删除角色</button>
-        <button pButton type="button" class="buttonLeft p-button-warning p-button-sm" (click)="roleModifyFunction(eachData.roleId)" *ngIf="roleModifyZone">修改角色</button>
-        <button pButton type="button" class="buttonLeft p-button p-button-sm" (click)="roleDetailFunction(eachData.roleId)" *ngIf="roleDetailZone">角色详情</button>
-        <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="roleModuleAssignmentFunction(eachData.roleId)" *ngIf="roleModuleAssignmentZone">角色模块分配</button>
+        <button nz-button nzType="primary" type="button" class="ant-btn-error" (click)="roleDeleteFunction(data.roleId)" *ngIf="roleDeleteZone">删除角色</button>
+        <button nz-button nzType="primary" type="button" class="ant-btn-warning" (click)="roleModifyFunction(data.roleId)" *ngIf="roleModifyZone">修改角色</button>
+        <button nz-button nzType="primary" type="button" class="ant-btn-main" (click)="roleDetailFunction(data.roleId)" *ngIf="roleDetailZone">角色详情</button>
+        <button nz-button nzType="primary" type="button" class="ant-btn-info" (click)="roleModuleAssignmentFunction(data.roleId)" *ngIf="roleModuleAssignmentZone">角色模块分配</button>
       </td>
     </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage" let-eachData>
-    <tr>
-      <td colspan="5"><div style="text-align:center;">无数据</div></td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="summary">
-    <button pButton type="button" class="p-button-info p-button-sm" (click)="search(1)" *ngIf="resultPage.currentPage>1">首页</button>
-    <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="search(resultPage.currentPage-1)" *ngIf="resultPage.currentPage >1">上一页</button>
-    <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="search(eachPage)" *ngFor="let eachPage of resultPage.pageList">{{eachPage}}</button>
-    <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="search(resultPage.currentPage+1)" *ngIf="resultPage.totalPage>resultPage.currentPage">下一页</button>
-    <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="search(resultPage.totalPage)" *ngIf="resultPage.totalPage>resultPage.currentPage">末页</button>
-    <button pButton type="button" class="buttonLeft p-button-secondary p-button-sm" [disabled]="true" *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</button>
-  </ng-template>
-</p-table>
+  </tbody>
+</nz-table>

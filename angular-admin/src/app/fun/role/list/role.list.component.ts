@@ -8,6 +8,7 @@ import { ApiConstant } from '../../../constant/ApiConstant';
 import { ResultPage } from '../../../model/ResultPage';
 import { RoleListRequest } from '../../../model/role/RoleListRequest';
 import { ConfirmationService, ConfirmEventType, Message, MessageService } from 'primeng/api';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-web-role-list',
@@ -44,6 +45,7 @@ export class RoleListComponent implements OnInit {
 
   public roleListRequest:RoleListRequest = new RoleListRequest();//角色列表搜索条件
   public resultPage:ResultPage = new ResultPage();//分页结果初始化
+  public loading = false;//数据加载
 
   //初始化
   ngOnInit(): void {
@@ -68,8 +70,9 @@ export class RoleListComponent implements OnInit {
 
   //角色列表
   public roleListFunction(roleListRequest:RoleListRequest):void {
-    this.httpService.requestJsonData(ApiConstant.SYS_ROLE_LIST,JSON.stringify(roleListRequest)).subscribe(
-      {
+    this.loading = true;
+    this.httpService.requestJsonData(ApiConstant.SYS_ROLE_LIST,JSON.stringify(roleListRequest))
+      .pipe(finalize(()=>this.loading=false)).subscribe({
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){

@@ -3,12 +3,12 @@ import { CommonConstant } from '../constant/CommonConstant';
 export class ResultPage {
 
   constructor(ret?:any){
-    if(ret==undefined){
-      this.data = CommonConstant.EMPTY;//空表示数据加载中
+    if(ret == undefined){
+      this.data = [];
     }else{
       let getData = ret.data;
-      if(getData==null||getData==''||getData.length==0){
-        this.data = null;//null表示无数据或数据获取异常
+      if(getData == null || getData == '' || getData.length == 0){
+        this.data = [];
       }else{
         this.data = ret.data;
         this.currentPage = ret.currentPage;
@@ -32,6 +32,6 @@ export class ResultPage {
 
   pageList:Array<Number>;//分页页数
 
-  dataLoading = CommonConstant.EMPTY;
+  dataLoading = CommonConstant.EMPTY;//未来改造将去除
 
 }

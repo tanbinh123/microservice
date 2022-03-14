@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* NgZorro全局样式 */
+/* NgZorro全局样式引入 */
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
 
 /* NgZorro自定义button样式 */
@@ -47,4 +47,10 @@
 }
 .ant-btn-error:hover{
   background-color: #f8584c;
+}
+
+/* NgZorro自定义数据表格搜索栏样式 */
+.searchZone{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
