@@ -22,6 +22,8 @@ public class SidebarInfoResponse implements Serializable {
 	
 	private String icon;
 	
+	private Integer level;
+	
 	private List<SidebarInfoResponse> list;
 	
 }
