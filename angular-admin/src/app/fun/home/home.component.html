@@ -1,17 +1,17 @@
-<div class="app-web-home">
-  <!--左侧sidebar-->
-  <div class="app-web-home-sidebar">
+<nz-layout>
+  <nz-sider>
+    <!--sidebar-->
     <app-web-home-sidebar></app-web-home-sidebar>
-  </div>
-  <!--右侧-->
-  <div class="app-web-right">
-    <!--右侧header-->
-    <div class="app-web-home-header">
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <!--header-->
       <app-web-home-header></app-web-home-header>
-    </div>
-    <!--右侧centeral-->
-    <div class="app-web-home-centeral">
+    </nz-header>
+    <nz-content>
+      <!--centeral-->
       <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+    </nz-content>
+    <!-- <nz-footer>footer</nz-footer> -->
+  </nz-layout>
+</nz-layout>
