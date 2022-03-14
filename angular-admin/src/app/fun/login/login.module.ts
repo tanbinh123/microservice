@@ -9,7 +9,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-import {NzLayoutModule} from "ng-zorro-antd/layout";
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @NgModule({
     imports: [
