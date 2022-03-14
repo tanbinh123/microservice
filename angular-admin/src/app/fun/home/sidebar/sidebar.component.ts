@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../service/SessionService';
-import { MenuItem/*, PrimeIcons*/ } from 'primeng/api';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-web-home-sidebar',
@@ -9,10 +9,12 @@ import { MenuItem/*, PrimeIcons*/ } from 'primeng/api';
 })
 export class SidebarComponent implements OnInit {
 
-  public items: MenuItem[];//组件写法
+  public menus = [];//组件写法
+  public mode = false;//组件写法
+  public dark = false;//组件写法
   //public menuListForTree:any;//原生写法
 
-  constructor(public sessionService:SessionService) {
+  constructor(public sessionService:SessionService,public router:Router,public activatedRoute:ActivatedRoute) {
 
   }
 
@@ -20,18 +22,18 @@ export class SidebarComponent implements OnInit {
     let tokenData:any = this.sessionService.getTokenData();
     let menuListForTree:any = tokenData.menuListForTree;
     //console.log(menuListForTree);
-    this.items = this.setTreeList(menuListForTree,null);//组件写法
+    this.menus = this.setTreeList(menuListForTree,null);//组件写法
     //this.menuListForTree = tokenData.menuListForTree;//原生写法
   }
 
-  //树形结构递归封装符合PrimeNG框架中PanelMenu组件的数据格式要求（这里后端返回的menuListForTree并未封装成树形，主要考虑到以后如果换前端组件，可能数据格式又是另一个了）
+  //树形结构递归封装符合NgZorro框架中Menu组件的数据格式要求（这里后端返回的menuListForTree并未封装成树形，主要考虑到以后如果换前端组件，可能数据格式又是另一个了）
   private setTreeList(menuListForTree:any,eachMenu:any):any {
     let menuList:Array<any> = [];
     for(let i=0;i<menuListForTree.length;i++) {
       let currentEach = menuListForTree[i];
-      let changeEach = {"label":currentEach.moduleName,"icon":currentEach.icon,"routerLink":currentEach.pageUrl};
+      let changeEach = {"title":currentEach.moduleName,"icon":currentEach.icon,"open":false,"selected":false,"disabled":false,"level":currentEach.level,"url":currentEach.pageUrl};
       if((eachMenu!=null&&eachMenu.moduleId==currentEach.parentId)||(eachMenu==null&&currentEach.parentId==null)) {
-        changeEach['items'] = this.setTreeList(menuListForTree,currentEach);
+        changeEach['children'] = this.setTreeList(menuListForTree,currentEach);
         menuList.push(changeEach);
       }
     }
@@ -39,6 +41,11 @@ export class SidebarComponent implements OnInit {
       menuList = null;
     }
     return menuList;
+  }
+
+  public menuClick(menu):void {
+    //console.log(menu);
+    this.router.navigate([menu.url],{relativeTo:this.activatedRoute});
   }
 
 }

@@ -1,8 +1,39 @@
 <div style="height:auto;vertical-align:middle;text-align:center;margin-top:5%;">
   <span style="font-weight:bold;"><a [routerLink]="['/web']"><h3>后台管理系统</h3></a></span>
 </div>
-<!-- 组件写法 -->
-<p-panelMenu [model]="items"></p-panelMenu>
+<ul nz-menu nzMode="inline" style="width:100%;">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+  <ng-template #menuTpl let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li
+        *ngIf="!menu.children"
+        nz-menu-item
+        [nzPaddingLeft]="menu.level * 24"
+        [nzDisabled]="menu.disabled"
+        [nzSelected]="menu.selected"
+        [nzMatchRouter]="true"
+        (click)="menuClick(menu)"
+      >
+        <i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i>
+        <span>{{ menu.title }}</span>
+      </li>
+      <li
+        *ngIf="menu.children"
+        nz-submenu
+        [nzPaddingLeft]="menu.level * 24"
+        [nzOpen]="menu.open"
+        [nzTitle]="menu.title"
+        [nzIcon]="menu.icon"
+        [nzDisabled]="menu.disabled"
+      >
+        <ul>
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
+        </ul>
+      </li>
+    </ng-container>
+  </ng-template>
+</ul>
+
 <!-- 原生做法 -->
 <!-- 1、父页面引用子页面的封装标签
 <div style="margin-top:5%;" *ngIf="menuListForTree!=null">
