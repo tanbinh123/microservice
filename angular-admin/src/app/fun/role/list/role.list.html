@@ -1,16 +1,16 @@
-<div class="searchZone">
-  <div nz-row [nzGutter]="4">
-    <div nz-col nzSpan="2">
+<nz-layout class="searchZone">
+  <div nz-row>
+    <div nz-col nzSpan="3">
       <input type="text" nz-input placeholder="请输入角色名称" maxlength="20" [(ngModel)]="roleListRequest.roleName"/>
     </div>
-    <div nz-col nzSpan="2">
-      <button nz-button nzType="primary" type="button" class="ant-btn-main" (click)="search(1)" *ngIf="roleListZone" [nzLoading]="loading">查询</button>
-      <button nz-button nzType="primary" type="button" class="ant-btn-info" (click)="reset()" *ngIf="roleListZone">重置</button>
-      <button nz-button nzType="primary" type="button" class="ant-btn-success" (click)="roleAddFunction()" *ngIf="roleAddZone">新增</button>
+    <div nz-col nzSpan="3">
+      <button nz-button nzType="primary" type="button" (click)="search(1)" *ngIf="roleListZone" [nzLoading]="loading">查询</button>
+      <button nz-button nzType="default" type="button" (click)="reset()" *ngIf="roleListZone">重置</button>
+      <button nz-button nzType="primary" type="button" (click)="roleAddFunction()" *ngIf="roleAddZone">新增</button>
     </div>
   </div>
-</div>
-<nz-table #rowSelectionTable nzShowPagination [nzFrontPagination]="false" (nzPageIndexChange)="search($event)" [nzLoading]="loading" *ngIf="roleListZone"
+</nz-layout>
+<nz-table class="tableZone" #rowSelectionTable nzShowPagination [nzFrontPagination]="false" (nzPageIndexChange)="search($event)" [nzLoading]="loading" *ngIf="roleListZone"
           [nzData]="resultPage.data" [nzTotal]="resultPage.totalSize" [nzPageIndex]="resultPage.currentPage" [nzPageSize]="resultPage.pageSize">
   <thead>
     <tr>
@@ -28,10 +28,10 @@
       <td>{{data.roleCode}}</td>
       <td>{{data.createDate}}</td>
       <td>
-        <button nz-button nzType="primary" type="button" class="ant-btn-error" (click)="roleDeleteFunction(data.roleId)" *ngIf="roleDeleteZone">删除角色</button>
-        <button nz-button nzType="primary" type="button" class="ant-btn-warning" (click)="roleModifyFunction(data.roleId)" *ngIf="roleModifyZone">修改角色</button>
-        <button nz-button nzType="primary" type="button" class="ant-btn-main" (click)="roleDetailFunction(data.roleId)" *ngIf="roleDetailZone">角色详情</button>
-        <button nz-button nzType="primary" type="button" class="ant-btn-info" (click)="roleModuleAssignmentFunction(data.roleId)" *ngIf="roleModuleAssignmentZone">角色模块分配</button>
+        <a *ngIf="roleDeleteZone" (click)="roleDeleteFunction(data.roleId)"><span nz-typography nzType="danger">删除角色</span></a>
+        <a *ngIf="roleModifyZone" (click)="roleModifyFunction(data.roleId)"><span nz-typography nzType="warning">修改角色</span></a>
+        <a *ngIf="roleDetailZone" (click)="roleDetailFunction(data.roleId)"><span nz-typography nzType="secondary">角色详情</span></a>
+        <a *ngIf="roleModuleAssignmentZone" (click)="roleModuleAssignmentFunction(data.roleId)"><span nz-typography nzType="success">角色模块分配</span></a>
       </td>
     </tr>
   </tbody>

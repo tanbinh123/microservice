@@ -7,14 +7,15 @@ import { SessionService } from '../../../service/SessionService';
 import { ApiConstant } from '../../../constant/ApiConstant';
 import { ResultPage } from '../../../model/ResultPage';
 import { RoleListRequest } from '../../../model/role/RoleListRequest';
-import { ConfirmationService, ConfirmEventType, Message, MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-web-role-list',
   templateUrl: './role.list.html',
   styleUrls: ['./role.list.scss'],
-  providers:[ConfirmationService,MessageService]
+  providers:[NzModalService]
 })
 
 export class RoleListComponent implements OnInit {
@@ -24,8 +25,7 @@ export class RoleListComponent implements OnInit {
               public httpService:HttpService,
               public authService:AuthService,
               public sessionService:SessionService,
-              public confirmationService:ConfirmationService,
-              public messageService:MessageService){
+              public nzMessageService:NzMessageService,public nzModalService: NzModalService){
     this.roleListZone = authService.canShow(ApiConstant.SYS_ROLE_LIST);
     this.roleDeleteZone = authService.canShow(ApiConstant.SYS_ROLE_DELETE);
     this.roleAddZone = authService.canShow(ApiConstant.SYS_ROLE_ADD);
@@ -43,9 +43,11 @@ export class RoleListComponent implements OnInit {
   roleModuleAssignmentZone:boolean;//角色模块分配
   /** 操作权限 end */
 
-  public roleListRequest:RoleListRequest = new RoleListRequest();//角色列表搜索条件
-  public resultPage:ResultPage = new ResultPage();//分页结果初始化
-  public loading = false;//数据加载
+  /** 分页及查询 start */
+  roleListRequest:RoleListRequest = new RoleListRequest();//角色列表搜索条件
+  resultPage:ResultPage = new ResultPage();//分页结果初始化
+  loading = false;//数据加载
+  /** 分页及查询 end */
 
   //初始化
   ngOnInit(): void {
@@ -79,7 +81,7 @@ export class RoleListComponent implements OnInit {
             let ret = result.data;
             this.resultPage = new ResultPage(ret);
           }else{
-            this.router.navigate(['webLogin']);
+            this.nzMessageService.error(result.message);
           }
         },
         error:e => {},
@@ -95,34 +97,31 @@ export class RoleListComponent implements OnInit {
 
   //删除角色
   public roleDeleteFunction(roleId:string):void {
-    this.confirmationService.confirm({
-      message: '您确定要删除该条记录吗？',
-      header: '删除确认',
-      icon: 'pi pi-exclamation-triangle',
-      key: 'deleteRoleButtonDialog_'+roleId,
-      accept: () => {
-        this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE,null,new Map([['roleId',roleId]])).subscribe(
+    this.nzModalService.confirm({
+      nzTitle: '删除确认',
+      nzContent: '确定删除吗？',
+      nzOkText: '确定',
+      nzCancelText: '取消',
+      nzOnOk: () => {
+        this.httpService.requestJsonData(ApiConstant.SYS_ROLE_DELETE, null, new Map([['roleId', roleId]])).subscribe(
           {
-            next:(result:any) => {
+            next: (result: any) => {
               //console.log(result);
-              if(result.code==200){
+              if (result.code == 200) {
                 this.search(1);
-                this.messageService.add({severity:'info',summary:'确定',detail:'角色删除成功'});
-                setTimeout(()=>{this.messageService.clear()},1000);
-              }else{
-                this.messageService.add({severity:'error',summary:'错误',detail:'角色删除失败'});
-                setTimeout(()=>{this.messageService.clear()},1000);
+                this.nzMessageService.info('角色删除成功');
+              } else {
+                this.nzMessageService.error(result.message);
               }
             },
-            error:e => {},
-            complete:() => {}
+            error: e => {
+              this.nzMessageService.error(e.message);
+            },
+            complete: () => {
+              //do nothing
+            }
           }
         );
-      },
-      reject: (type) => {
-        //case ConfirmEventType.REJECT,case ConfirmEventType.CANCEL
-        this.messageService.add({severity:'warn',summary:'取消',detail:'取消删除'});
-        setTimeout(()=>{this.messageService.clear()},1000);
       }
     });
   }
