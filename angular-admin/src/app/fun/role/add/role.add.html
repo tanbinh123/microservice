@@ -1,19 +1,30 @@
-<div class="p-grid p-fluid">
-  <div style="z-index:1000;position:absolute;margin-left:80%;"><p-messages></p-messages></div>
-  <div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-      <span class="p-inputgroup-addon">角色名称</span>
-      <input type="text" pInputText [(ngModel)]="roleAddRequest.roleName">
-      <span class="p-inputgroup-addon">角色代码</span>
-      <input type="text" pInputText [(ngModel)]="roleAddRequest.roleCode">
-      <span class="p-inputgroup-addon">备注</span>
-      <input type="text" pInputText [(ngModel)]="roleAddRequest.remark">
-    </div>
-  </div>
-  <div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-      <button pButton type="button" class="p-button p-button-sm" [disabled]="addFlag" (click)="roleAdd()">提交</button>
-      <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="roleAddBack()">返回</button>
-    </div>
-  </div>
-</div>
+<nz-layout>
+  <form nz-form [formGroup]="validateForm" style="margin-top:10px">
+    <nz-form-item>
+      <nz-form-label [nzSm]="2" nzRequired nzFor="roleName">角色名称</nz-form-label>
+      <nz-form-control [nzSm]="3">
+        <input type="text" formControlName="roleName" nz-input placeholder="请输入角色名称" [(ngModel)]="roleAddRequest.roleName"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="2" nzRequired nzFor="roleCode">角色代码</nz-form-label>
+      <nz-form-control [nzSm]="3">
+        <input type="text" formControlName="roleCode" nz-input placeholder="请输入角色代码" [(ngModel)]="roleAddRequest.roleCode"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="2" nzFor="remark">备注</nz-form-label>
+      <nz-form-control [nzSm]="3">
+        <input type="text" formControlName="remark" nz-input placeholder="请输入备注" [(ngModel)]="roleAddRequest.remark"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSm]="5">
+        <div style="float:right">
+          <button nz-button type="button" nzType="default" (click)="roleAddBack()" style="margin-right:5px">返回</button>
+          <button nz-button type="button" nzType="primary" (click)="roleAdd()" [nzLoading]="loading">提交</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-layout>

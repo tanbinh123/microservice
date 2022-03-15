@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { RoleAddComponent } from './role.add.component';
-import { TableModule } from "primeng/table";
-import { InputTextModule } from "primeng/inputtext";
-import { ButtonModule } from "primeng/button";
-import { MessagesModule } from "primeng/messages";
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, TableModule, InputTextModule, ButtonModule, MessagesModule],
+  imports: [
+    CommonModule, RouterModule, FormsModule,
+    NzLayoutModule, NzGridModule, NzInputModule, NzButtonModule, NzFormModule, ReactiveFormsModule
+  ],
   declarations:[RoleAddComponent],
   exports:[RoleAddComponent]
 })
