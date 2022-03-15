@@ -78,14 +78,17 @@ export class RoleListComponent implements OnInit {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            let ret = result.data;
-            this.resultPage = new ResultPage(ret);
+            this.resultPage = new ResultPage(result.data);
           }else{
             this.nzMessageService.error(result.message);
           }
         },
-        error:e => {},
-        complete:() => {}
+        error:e => {
+          this.nzMessageService.error(e.message);
+        },
+        complete:() => {
+          //do nothing
+        }
       }
     );
   }
