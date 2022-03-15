@@ -1,9 +1,9 @@
-import {Component,OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {DatePipe} from '@angular/common';
-import {SessionService} from '../../../service/SessionService';
-import {HttpService} from '../../../service/HttpService';
-import {ApiConstant} from '../../../constant/ApiConstant';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { SessionService } from '../../../service/SessionService';
+import { HttpService } from '../../../service/HttpService';
+import { ApiConstant } from '../../../constant/ApiConstant';
 
 @Component({
   selector: 'app-web-home-header',
@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.getLocalTime();
     this.getServeTime();
-
     this.userName = this.sessionService.getTokenData().user.userName;
   }
 

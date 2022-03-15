@@ -1,17 +1,29 @@
-<div class="p-grid p-fluid">
-  <div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-      <span class="p-inputgroup-addon">角色名称</span>
-      <input type="text" pInputText [disabled]="true" [(ngModel)]="roleDetailResponse.roleName">
-      <span class="p-inputgroup-addon">角色代码</span>
-      <input type="text" pInputText [disabled]="true" [(ngModel)]="roleDetailResponse.roleCode">
-      <span class="p-inputgroup-addon">备注</span>
-      <input type="text" pInputText [disabled]="true" [(ngModel)]="roleDetailResponse.remark">
-    </div>
-  </div>
-  <div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-      <button pButton type="button" class="buttonLeft p-button-info p-button-sm" (click)="roleDetailBack()">返回</button>
-    </div>
-  </div>
-</div>
+<nz-layout>
+  <form nz-form style="margin-top:10px">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">角色名称</nz-form-label>
+      <nz-form-control [nzSpan]="3">
+        <input type="text" nz-input [disabled]="true" [value]="roleDetailResponse.roleName"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">角色代码</nz-form-label>
+      <nz-form-control [nzSpan]="3">
+        <input type="text" nz-input [disabled]="true" [value]="roleDetailResponse.roleCode"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">备注</nz-form-label>
+      <nz-form-control [nzSpan]="3">
+        <input type="text" nz-input [disabled]="true" [value]="roleDetailResponse.remark"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="5">
+        <div style="float:right">
+          <button nz-button type="button" nzType="default" (click)="roleDetailBack()">返回</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-layout>

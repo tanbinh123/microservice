@@ -25,9 +25,12 @@ export class LoginComponent implements OnInit {
   userLoginRequest:UserLoginRequest = new UserLoginRequest();
 
   constructor(public router:Router,
-              public httpService:HttpService,public sessionService:SessionService,public datePipe:DatePipe,
-              public formBuilder:FormBuilder,public nzMessageService:NzMessageService) {
-
+              public httpService:HttpService,
+              public sessionService:SessionService,
+              public datePipe:DatePipe,
+              public formBuilder:FormBuilder,
+              public nzMessageService:NzMessageService) {
+    //do nothing
   }
 
   ngOnInit() {

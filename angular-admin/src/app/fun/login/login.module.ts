@@ -12,10 +12,10 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @NgModule({
-    imports: [
-        CommonModule, FormsModule, RouterModule, ReactiveFormsModule,
-        NzButtonModule, NzFormModule, NzInputModule, NzTypographyModule, NzMessageModule, NzLayoutModule
-    ],
+  imports: [
+    CommonModule, FormsModule, RouterModule, ReactiveFormsModule,
+    NzButtonModule, NzFormModule, NzInputModule, NzTypographyModule, NzMessageModule, NzLayoutModule
+  ],
   declarations: [LoginComponent, LoginKeyDownDirective],
   exports: [LoginComponent]
 })

@@ -1,25 +1,25 @@
 <nz-layout>
   <form nz-form [formGroup]="validateForm" style="margin-top:10px">
     <nz-form-item>
-      <nz-form-label [nzSm]="2" nzRequired nzFor="roleName">角色名称</nz-form-label>
-      <nz-form-control [nzSm]="3">
+      <nz-form-label [nzSpan]="2" nzRequired nzFor="roleName">角色名称</nz-form-label>
+      <nz-form-control [nzSpan]="3">
         <input type="text" formControlName="roleName" nz-input placeholder="请输入角色名称" [(ngModel)]="roleAddRequest.roleName"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="2" nzRequired nzFor="roleCode">角色代码</nz-form-label>
-      <nz-form-control [nzSm]="3">
+      <nz-form-label [nzSpan]="2" nzRequired nzFor="roleCode">角色代码</nz-form-label>
+      <nz-form-control [nzSpan]="3">
         <input type="text" formControlName="roleCode" nz-input placeholder="请输入角色代码" [(ngModel)]="roleAddRequest.roleCode"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="2" nzFor="remark">备注</nz-form-label>
-      <nz-form-control [nzSm]="3">
+      <nz-form-label [nzSpan]="2" nzFor="remark">备注</nz-form-label>
+      <nz-form-control [nzSpan]="3">
         <input type="text" formControlName="remark" nz-input placeholder="请输入备注" [(ngModel)]="roleAddRequest.remark"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control [nzSm]="5">
+      <nz-form-control [nzSpan]="5">
         <div style="float:right">
           <button nz-button type="button" nzType="default" (click)="roleAddBack()" style="margin-right:5px">返回</button>
           <button nz-button type="button" nzType="primary" (click)="roleAdd()" [nzLoading]="loading">提交</button>

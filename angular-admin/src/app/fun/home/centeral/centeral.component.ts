@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import * as echarts from 'echarts';
 
 @Component({
-    selector: 'app-web-home-centeral',
-    templateUrl: './centeral.html',
-    styleUrls: ['./centeral.scss']
+  selector: 'app-web-home-centeral',
+  templateUrl: './centeral.html',
+  styleUrls: ['./centeral.scss']
 })
 
 export class CenteralComponent implements OnInit {
 
   constructor() {
+
   }
 
   ngOnInit() {

@@ -6,13 +6,16 @@ import { AuthService } from '../../../service/AuthService';
 import { SessionService } from '../../../service/SessionService';
 import { ApiConstant } from '../../../constant/ApiConstant';
 import { RoleModifyRequest } from '../../../model/role/RoleModifyRequest';
-import { MessageService } from 'primeng/api';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NgZorroValidatorUtil } from '../../../util/NgZorroValidatorUtil';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-web-role-modify',
   templateUrl: './role.modify.html',
   styleUrls: ['./role.modify.scss'],
-  providers:[MessageService]
+  providers:[]
 })
 
 export class RoleModifyComponent implements OnInit {
@@ -22,18 +25,29 @@ export class RoleModifyComponent implements OnInit {
               public httpService:HttpService,
               public authService:AuthService,
               public sessionService:SessionService,
-              public messageService:MessageService){
-
+              public formBuilder:FormBuilder,
+              public nzMessageService:NzMessageService){
+    //do nothing
   }
 
-  public roleModifyRequest:RoleModifyRequest = new RoleModifyRequest();//角色修改
+  validateForm!:FormGroup;
+  loading = false;//数据加载
+  roleModifyRequest:RoleModifyRequest = new RoleModifyRequest();//角色修改
 
   //初始化
   ngOnInit(): void {
+    this.initValidateForm();
     this.activatedRoute.queryParams.subscribe(queryParam => {
       let roleId = queryParam.roleId;
       this.roleModifyRequest.roleId = roleId;
       this.roleDetail(roleId);
+    });
+  }
+  public initValidateForm():void {
+    this.validateForm = this.formBuilder.group({
+      roleName: [null, [NgZorroValidatorUtil.empty]],
+      roleCode: [null, [NgZorroValidatorUtil.empty]],
+      remark: [null]
     });
   }
 
@@ -58,31 +72,35 @@ export class RoleModifyComponent implements OnInit {
   }
 
   //修改角色
-  modifyFlag:boolean = false;
   public roleModify():void{
-    this.modifyFlag = true;
-    this.httpService.requestJsonData(ApiConstant.SYS_ROLE_MODIFY,JSON.stringify(this.roleModifyRequest)).subscribe(
-      {
+    if (this.validateForm.valid) {
+      this.loading=true;
+      this.httpService.requestJsonData(ApiConstant.SYS_ROLE_MODIFY,JSON.stringify(this.roleModifyRequest))
+        .pipe(finalize(()=>this.loading=false)).subscribe({
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            this.messageService.add({severity:'info',summary:'修改',detail:'角色修改成功'});
-            setTimeout(()=>{
-              this.messageService.clear();
-              this.router.navigate(['../'],{relativeTo:this.activatedRoute});
-            },1000);
+            this.nzMessageService.success('角色修改成功');
+            this.router.navigate(['../'],{relativeTo:this.activatedRoute});
           }else{
-            this.messageService.add({severity:'error',summary:'错误',detail:'角色修改失败'});
-            setTimeout(()=>{this.messageService.clear()},1000);
-            this.modifyFlag = false;
+            this.nzMessageService.error('角色修改失败');
           }
         },
         error:e => {
-          this.modifyFlag = false;
+          this.nzMessageService.error(e.message);
         },
-        complete:() => {}
-      }
-    );
+        complete:() => {
+          //do nothing
+        }
+      })
+    } else {
+      Object.values(this.validateForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
   }
 
   //返回

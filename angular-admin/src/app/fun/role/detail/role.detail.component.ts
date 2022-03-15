@@ -1,11 +1,12 @@
-import {Component,OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {HttpService} from '../../../service/HttpService';
-import {AuthService} from '../../../service/AuthService';
-import {SessionService} from '../../../service/SessionService';
-import {ApiConstant} from '../../../constant/ApiConstant';
-import {RoleDetailResponse} from '../../../model/role/RoleDetailResponse';
+import { HttpService } from '../../../service/HttpService';
+import { AuthService } from '../../../service/AuthService';
+import { SessionService } from '../../../service/SessionService';
+import { ApiConstant } from '../../../constant/ApiConstant';
+import { RoleDetailResponse } from '../../../model/role/RoleDetailResponse';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-web-role-detail',
@@ -20,11 +21,12 @@ export class RoleDetailComponent implements OnInit {
               public activatedRoute:ActivatedRoute,
               public httpService:HttpService,
               public authService:AuthService,
-              public sessionService:SessionService){
-
+              public sessionService:SessionService,
+              public nzMessageService:NzMessageService){
+    //do nothing
   }
 
-  public roleDetailResponse:RoleDetailResponse = new RoleDetailResponse();//角色详情
+  roleDetailResponse:RoleDetailResponse = new RoleDetailResponse();//角色详情
 
   //初始化
   ngOnInit(): void {
@@ -45,11 +47,15 @@ export class RoleDetailComponent implements OnInit {
             this.roleDetailResponse.roleCode = result.data.roleCode;//角色代码
             this.roleDetailResponse.remark = result.data.remark;//备注
           }else{
-            alert(result.message);
+            this.nzMessageService.error(result.message);
           }
         },
-        error:e => {},
-        complete:() => {}
+        error:e => {
+          this.nzMessageService.error(e.message);
+        },
+        complete:() => {
+          //do nothing
+        }
       }
     );
   }

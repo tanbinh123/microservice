@@ -20,10 +20,14 @@ import { finalize } from 'rxjs';
 
 export class RoleAddComponent implements OnInit {
 
-  constructor(public router:Router,public activatedRoute:ActivatedRoute,
-              public httpService:HttpService,public authService:AuthService,public sessionService:SessionService,
-              public formBuilder:FormBuilder,public nzMessageService:NzMessageService){
-
+  constructor(public router:Router,
+              public activatedRoute:ActivatedRoute,
+              public httpService:HttpService,
+              public authService:AuthService,
+              public sessionService:SessionService,
+              public formBuilder:FormBuilder,
+              public nzMessageService:NzMessageService){
+    //do nothing
   }
 
   validateForm!:FormGroup;

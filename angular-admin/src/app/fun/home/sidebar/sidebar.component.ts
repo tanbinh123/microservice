@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
     let menuList:Array<any> = [];
     for(let i=0;i<menuListForTree.length;i++) {
       let currentEach = menuListForTree[i];
-      let changeEach = {"title":currentEach.moduleName,"icon":currentEach.icon,"open":false,"selected":false,"disabled":false,"level":currentEach.level,"url":currentEach.pageUrl};
+      let changeEach = {'title':currentEach.moduleName,'icon':currentEach.icon,'open':false,'selected':false,'disabled':false,'level':currentEach.level,'url':currentEach.pageUrl};
       if((eachMenu!=null&&eachMenu.moduleId==currentEach.parentId)||(eachMenu==null&&currentEach.parentId==null)) {
         changeEach['children'] = this.setTreeList(menuListForTree,currentEach);
         menuList.push(changeEach);

@@ -6,9 +6,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RoleAddComponent } from './role.add.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
 
 @NgModule({
   imports: [
