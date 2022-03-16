@@ -1,9 +1,5 @@
-<div style="margin-left:5%;">
-  <div *ngIf="moduleTree!=null&&moduleTree.length>0">
-    <app-web-role-role-module-assignment-module-recursion *ngFor="let i of moduleTree" [checkFlag]="i.checkFlag" [id]="i.moduleId" [name]="i.moduleName" [type]="i.type" [list]="i.list"></app-web-role-role-module-assignment-module-recursion>
-  </div>
-  <div>
-    <button type="button" (click)="roleModuleAssignment()" class="btn btn-primary">分配</button>
-    <button type="button" (click)="roleModuleAssignmentBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
-  </div>
+<nz-tree nzCheckable nzMultiple [nzData]="moduleTree" [nzCheckedKeys]="checkedKeys" (nzCheckBoxChange)="nzCheckBoxChange($event)"></nz-tree>
+<div style="float:left;margin-left:5px;margin-top:10px;">
+  <button nz-button type="button" nzType="default" (click)="roleModuleAssignmentBack()" style="margin-right:5px">返回</button>
+  <button nz-button type="button" nzType="primary" (click)="roleModuleAssignment()" [nzLoading]="loading">分配</button>
 </div>
