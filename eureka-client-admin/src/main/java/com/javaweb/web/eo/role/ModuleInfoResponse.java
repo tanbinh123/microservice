@@ -22,6 +22,8 @@ public class ModuleInfoResponse implements Serializable {
 	
 	private String type;
 	
+	private Integer level;
+	
 	private List<ModuleInfoResponse> list;
 
 }
