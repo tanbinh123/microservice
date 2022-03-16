@@ -49,7 +49,7 @@
 	</select>
 	
 	<select id="roleModuleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.role.ModuleInfoResponse">
-		SELECT (CASE WHEN tmp.module_id is NULL THEN false ELSE true END) as checkFlag,
+		SELECT (CASE WHEN tmp.module_id is NULL THEN false ELSE true END) as checkFlag,level,
 	           m.module_name as moduleName,m.module_id as moduleId,m.parent_id as parentId,
 	           (CASE WHEN m.type = 1 then 'PC端' when m.type = 2 then '安卓端' when m.type = 3 then 'IOS端' else '全端通用' end) as type 
 	    from sys_module as m 
