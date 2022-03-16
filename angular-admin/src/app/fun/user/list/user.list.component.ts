@@ -1,19 +1,22 @@
-import {Component,OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {HttpService} from '../../../service/HttpService';
-import {AuthService} from '../../../service/AuthService';
-import {SessionService} from '../../../service/SessionService';
-import {ApiConstant} from '../../../constant/ApiConstant';
-import {UserListRequest} from '../../../model/user/UserListRequest';
-import {ResultPage} from '../../../model/ResultPage';
+import { HttpService } from '../../../service/HttpService';
+import { AuthService } from '../../../service/AuthService';
+import { SessionService } from '../../../service/SessionService';
+import { ApiConstant } from '../../../constant/ApiConstant';
+import { UserListRequest } from '../../../model/user/UserListRequest';
+import { ResultPage } from '../../../model/ResultPage';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { finalize} from 'rxjs';
 
 
 @Component({
   selector: 'app-web-user-list',
   templateUrl: './user.list.html',
   styleUrls: ['./user.list.scss'],
-  providers:[]
+  providers:[NzModalService]
 })
 
 export class UserListComponent implements OnInit {
@@ -22,7 +25,9 @@ export class UserListComponent implements OnInit {
               public activatedRoute:ActivatedRoute,
               public httpService:HttpService,
               public authService:AuthService,
-              public sessionService:SessionService){
+              public sessionService:SessionService,
+              public nzMessageService:NzMessageService,
+              public nzModalService: NzModalService){
     this.userListZone = authService.canShow(ApiConstant.SYS_USER_LIST);
     this.userDeleteZone = authService.canShow(ApiConstant.SYS_USER_DELETE);
     this.userAddZone = authService.canShow(ApiConstant.SYS_USER_ADD);
@@ -44,8 +49,11 @@ export class UserListComponent implements OnInit {
   userInitPasswordZone:boolean;//初始化密码
   /** 操作权限 end */
 
-  public userListRequest:UserListRequest = new UserListRequest();//用户列表搜索条件
-  public resultPage:ResultPage = new ResultPage();//分页结果初始化
+  /** 分页及查询 start */
+  userListRequest:UserListRequest = new UserListRequest();//用户列表搜索条件
+  resultPage:ResultPage = new ResultPage();//分页结果初始化
+  loading = false;//数据加载
+  /** 分页及查询 end */
 
   //初始化
   ngOnInit(): void {
@@ -57,7 +65,7 @@ export class UserListComponent implements OnInit {
   }
 
   //搜索按钮
-  public userSearch(currentPage):void{
+  public search(currentPage):void{
     this.resultPage = new ResultPage();//对每次搜索初始化分页
     this.userListRequest.currentPage = currentPage;
     this.userListFunction(this.userListRequest);
@@ -70,19 +78,23 @@ export class UserListComponent implements OnInit {
 
   //用户列表
   public userListFunction(userListRequest:UserListRequest):void {
-    this.httpService.requestJsonData(ApiConstant.SYS_USER_LIST,JSON.stringify(userListRequest)).subscribe(
+    this.httpService.requestJsonData(ApiConstant.SYS_USER_LIST,JSON.stringify(userListRequest))
+      .pipe(finalize(()=>this.loading=false)).subscribe(
       {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            let ret = result.data;
-            this.resultPage = new ResultPage(ret);
+            this.resultPage = new ResultPage(result.data);
           }else{
-            this.router.navigate(['webLogin']);
+            this.nzMessageService.error(result.message);
           }
         },
-        error:e => {},
-        complete:() => {}
+        error:e => {
+          this.nzMessageService.error(e.message);
+        },
+        complete:() => {
+          //do nothing
+        }
       }
     );
   }
@@ -94,21 +106,33 @@ export class UserListComponent implements OnInit {
 
   //删除用户
   public userDeleteFunction(userId:string):void {
-    this.httpService.requestJsonData(ApiConstant.SYS_USER_DELETE,null,new Map([['userId',userId]])).subscribe(
-      {
-        next:(result:any) => {
-          //console.log(result);
-          if(result.code==200){
-            this.userSearch(1);
-            alert('用户删除成功');
-          }else{
-            alert('用户删除失败');
+    this.nzModalService.confirm({
+      nzTitle: '删除确认',
+      nzContent: '确定删除吗？',
+      nzOkText: '确定',
+      nzCancelText: '取消',
+      nzOnOk: () => {
+        this.httpService.requestJsonData(ApiConstant.SYS_USER_DELETE, null, new Map([['userId', userId]])).subscribe(
+          {
+            next: (result: any) => {
+              //console.log(result);
+              if (result.code == 200) {
+                this.search(1);
+                this.nzMessageService.info('用户删除成功');
+              } else {
+                this.nzMessageService.error(result.message);
+              }
+            },
+            error: e => {
+              this.nzMessageService.error(e.message);
+            },
+            complete: () => {
+              //do nothing
+            }
           }
-        },
-        error:e => {},
-        complete:() => {}
+        );
       }
-    );
+    });
   }
 
   //用户详情
@@ -133,21 +157,33 @@ export class UserListComponent implements OnInit {
 
   //初始化密码
   public userInitPasswordFunction(userId:string):void {
-    this.httpService.requestJsonData(ApiConstant.SYS_USER_INIT_PASSWORD,null,new Map([['userId',userId]])).subscribe(
-      {
-        next:(result:any) => {
-          //console.log(result);
-          if(result.code==200){
-            this.userSearch(1);
-            alert('初始化密码成功');
-          }else{
-            alert('初始化密码失败');
+    this.nzModalService.confirm({
+      nzTitle: '初始化密码确认',
+      nzContent: '确定初始化密码吗？',
+      nzOkText: '确定',
+      nzCancelText: '取消',
+      nzOnOk: () => {
+        this.httpService.requestJsonData(ApiConstant.SYS_USER_INIT_PASSWORD, null, new Map([['userId', userId]])).subscribe(
+          {
+            next: (result: any) => {
+              //console.log(result);
+              if (result.code == 200) {
+                this.search(1);
+                this.nzMessageService.info('初始化密码成功');
+              } else {
+                this.nzMessageService.error(result.message);
+              }
+            },
+            error: e => {
+              this.nzMessageService.error(e.message);
+            },
+            complete: () => {
+              //do nothing
+            }
           }
-        },
-        error:e => {},
-        complete:() => {}
+        );
       }
-    );
+    });
   }
 
 }

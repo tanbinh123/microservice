@@ -166,4 +166,4 @@ const routes: Routes = [
   {path:'**',redirectTo: '/webLogin', pathMatch: 'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 
-export const AppRoutingModule = RouterModule.forRoot(routes,{useHash:true});
+export const APP_ROUTING_MOULE = RouterModule.forRoot(routes,{useHash:true});

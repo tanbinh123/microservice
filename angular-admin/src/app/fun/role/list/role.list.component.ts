@@ -25,7 +25,8 @@ export class RoleListComponent implements OnInit {
               public httpService:HttpService,
               public authService:AuthService,
               public sessionService:SessionService,
-              public nzMessageService:NzMessageService,public nzModalService: NzModalService){
+              public nzMessageService:NzMessageService,
+              public nzModalService: NzModalService){
     this.roleListZone = authService.canShow(ApiConstant.SYS_ROLE_LIST);
     this.roleDeleteZone = authService.canShow(ApiConstant.SYS_ROLE_DELETE);
     this.roleAddZone = authService.canShow(ApiConstant.SYS_ROLE_ADD);
@@ -55,7 +56,7 @@ export class RoleListComponent implements OnInit {
     this.roleListRequest.currentPage = 1;
     this.roleListRequest.pageSize = 5;
     */
-    this.roleListFunction(this.roleListRequest);//初始化用户列表
+    this.roleListFunction(this.roleListRequest);//初始化角色列表
   }
 
   //搜索按钮

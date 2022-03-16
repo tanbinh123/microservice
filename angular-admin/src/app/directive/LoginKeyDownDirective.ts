@@ -1,6 +1,6 @@
 import { Directive, HostBinding, HostListener } from '@angular/core';
 
-const rgbNum:any = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+const RGB_NUM:any = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
 
 //使用：在@NgModule中的declarations中引入LoginKeyDownDirective
 //注意：A directive must belong to exactly one NgModule. Do not re-declare a directive imported from another module.
@@ -19,8 +19,8 @@ export class LoginKeyDownDirective {
   public onKeydown():void {
     let rgb = '#';
     for(let i=0;i<6;i++){
-      let index = Math.floor(Math.random() * rgbNum.length);
-      rgb += rgbNum[index];
+      let index = Math.floor(Math.random() * RGB_NUM.length);
+      rgb += RGB_NUM[index];
     }
     this.color = this.borderColor = rgb;
   }

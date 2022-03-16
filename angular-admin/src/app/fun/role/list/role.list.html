@@ -1,7 +1,7 @@
 <nz-layout class="searchZone">
-  <div nz-row>
-    <div nz-col nzSpan="3">
-      <input type="text" nz-input placeholder="请输入角色名称" maxlength="20" [(ngModel)]="roleListRequest.roleName"/>
+  <div nz-row [nzGutter]="5">
+    <div nz-col nzSpan="2">
+      <input type="text" nz-input placeholder="请输入角色名称" [(ngModel)]="roleListRequest.roleName"/>
     </div>
     <div nz-col nzSpan="3">
       <button nz-button nzType="primary" type="button" (click)="search(1)" *ngIf="roleListZone" [nzLoading]="loading">查询</button>
