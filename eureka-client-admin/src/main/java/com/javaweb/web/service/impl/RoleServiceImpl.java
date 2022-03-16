@@ -87,11 +87,12 @@ public class RoleServiceImpl extends BaseDao implements RoleService {
 	@Override
 	public List<ModuleInfoResponse> roleModuleInfo(String roleId) {
 		List<ModuleInfoResponse> list = roleDao.roleModuleInfo(roleId);
-		list = setTreeList(list,null);
+		//list = setTreeList(list,null);
 		return list;
 	}
 	
 	//封装成树形结构集合
+	/**
 	private List<ModuleInfoResponse> setTreeList(List<ModuleInfoResponse> originList,ModuleInfoResponse moduleInfoResponse){
 		List<ModuleInfoResponse> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
@@ -103,6 +104,7 @@ public class RoleServiceImpl extends BaseDao implements RoleService {
 		}
 		return moduleList;
 	}
+	*/
 
 	@Transactional
 	@Override
